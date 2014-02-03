@@ -3,7 +3,7 @@ HTML forms
 """
 
 import re
-import collections
+from pyrobot.compat import OrderedDict
 
 from . import fields
 from .. import helpers
@@ -37,7 +37,7 @@ def _parse_fields(parsed):
 
     """
     # Note: Call this `rv` to avoid name conflict with `fields` module
-    rv = collections.OrderedDict()
+    rv = OrderedDict()
 
     # Prepare field tags
     tags = parsed.find_all(_tag_ptn)
