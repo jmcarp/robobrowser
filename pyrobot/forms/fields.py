@@ -4,6 +4,7 @@ HTML form fields
 
 import abc
 
+from pyrobot.compat import with_metaclass, string_types
 from .. import helpers
 
 class ValueMeta(type):
@@ -27,10 +28,8 @@ class FieldMeta(ValueMeta, abc.ABCMeta):
     """
     pass
 
-class BaseField(object):
+class BaseField(with_metaclass(FieldMeta)):
     """Abstract base class for form fields."""
-
-    __metaclass__ = FieldMeta
 
     def __init__(self, parsed):
         """Construct form field from HTML string or BeautifulSoup tag.
@@ -66,9 +65,9 @@ class Input(BaseField):
 class FileInput(BaseField):
 
     def _set_value(self, value):
-        if isinstance(value, file):
+        if hasattr(value, 'read'):
             self._value = value
-        elif isinstance(value, basestring):
+        elif isinstance(value, string_types):
             self._value = open(value)
         else:
             raise ValueError('Value must be a file object or file path')
@@ -158,7 +157,7 @@ class FlatOptionField(MultiOptionField):
             options.append(value)
             labels.append(
                 option.next.string
-                if isinstance(option.next, basestring)
+                if isinstance(option.next, string_types)
                 else None
             )
             if checked is not None:

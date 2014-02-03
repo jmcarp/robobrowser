@@ -3,8 +3,8 @@ from nose.tools import *
 
 import re
 import functools
-import responses
 
+from pyrobot import responses
 from pyrobot.browser import RoboBrowser
 from pyrobot.browser import RoboError
 
@@ -39,7 +39,7 @@ mock_links = mock_responses(
     [
         ArgCatcher(
             responses.GET, 'http://pyrobot.com/links/',
-            body='''
+            body=b'''
                 <a href="/link1/">sheer heart attack</a>
                 <a href="/link2/" class="song">night at the opera</a>
             '''
@@ -53,7 +53,7 @@ mock_forms = mock_responses(
     [
         ArgCatcher(
             responses.GET, 'http://pyrobot.com/get/',
-            body='''
+            body=b'''
                 <form id="bass" method="post" action="/post/">'
                     <input name="deacon" value="john" />
                 </form>

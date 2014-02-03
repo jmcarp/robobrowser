@@ -6,8 +6,10 @@ import re
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 
+from pyrobot.compat import string_types, iteritems
+
 def match_text(text, tag):
-    if isinstance(text, (str, unicode)):
+    if isinstance(text, string_types):
         return text in tag.text
     if isinstance(text, re._pattern_type):
         return text.search(tag.text)
@@ -73,5 +75,5 @@ def lowercase_attr_names(tag):
     # Use list comprehension instead of dict comprehension for 2.6 support
     tag.attrs = dict([
         (key.lower(), value)
-        for key, value in tag.attrs.iteritems()
+        for key, value in iteritems(tag.attrs)
     ])

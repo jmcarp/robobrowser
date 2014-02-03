@@ -5,6 +5,7 @@ from nose.tools import *
 import tempfile
 from bs4 import BeautifulSoup
 
+from pyrobot.compat import builtin_name
 from pyrobot.forms import Form, fields
 from pyrobot.forms.form import _parse_fields
 
@@ -396,7 +397,7 @@ class TestFileInput(unittest.TestCase):
         assert_equal(self.input._value, file)
         assert_equal(self.input.value, file)
 
-    @mock.patch('__builtin__.open')
+    @mock.patch('{0}.open'.format(builtin_name))
     def test_value_name(self, mock_open):
         file = tempfile.TemporaryFile('r')
         mock_open.return_value = file

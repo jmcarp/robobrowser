@@ -4,10 +4,10 @@ Robotic browser
 
 import re
 import requests
-import urlparse
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 
+from pyrobot.compat import urlparse, string_types
 from . import helpers
 from .forms.form import Form
 
@@ -260,7 +260,7 @@ class RoboBrowser(object):
         """
         if isinstance(value, Tag):
             link = value
-        elif isinstance(value, (str, unicode)):
+        elif isinstance(value, string_types):
             text = re.compile(re.escape(value), re.I)
             link = self.get_link(text=text, *args, **kwargs)
         elif isinstance(value, re._pattern_type):
