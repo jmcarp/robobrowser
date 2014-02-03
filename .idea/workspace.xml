@@ -78,7 +78,7 @@
       <file leaf-file-name="form.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyrobot/forms/form.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="10" selection-start="14" selection-end="14" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1935">
+            <state line="1" column="10" selection-start="14" selection-end="14" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1980">
               <folding />
             </state>
           </provider>
@@ -93,10 +93,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_browser.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="test_browser.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/test_browser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="251" column="0" selection-start="7315" selection-end="7315" vertical-scroll-proportion="0.7977528" vertical-offset="3410" max-vertical-offset="3855">
+            <state line="251" column="0" selection-start="7315" selection-end="7315" vertical-scroll-proportion="0.0" vertical-offset="3410" max-vertical-offset="3855">
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -104,11 +104,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_forms.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="test_forms.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/test_forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="0" selection-start="185" selection-end="185" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6285">
-              <folding />
+            <state line="35" column="22" selection-start="1037" selection-end="1037" vertical-scroll-proportion="0.5685393" vertical-offset="272" max-vertical-offset="6285">
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -124,13 +126,13 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/setup.py" />
-        <option value="$PROJECT_DIR$/tests/test_forms.py" />
         <option value="$PROJECT_DIR$/pyrobot/forms/fields.py" />
         <option value="$PROJECT_DIR$/pyrobot/forms/form.py" />
         <option value="$PROJECT_DIR$/pyrobot/browser.py" />
         <option value="$PROJECT_DIR$/pyrobot/__init__.py" />
         <option value="$PROJECT_DIR$/pyrobot/helpers.py" />
         <option value="$PROJECT_DIR$/tests/test_browser.py" />
+        <option value="$PROJECT_DIR$/tests/test_forms.py" />
       </list>
     </option>
   </component>
@@ -396,13 +398,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="185" selection-end="185" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6285">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pyrobot/forms/fields.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="16" selection-start="20" selection-end="20" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3105">
@@ -442,9 +437,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_browser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="251" column="0" selection-start="7315" selection-end="7315" vertical-scroll-proportion="0.7977528" vertical-offset="3410" max-vertical-offset="3855">
+        <state line="251" column="0" selection-start="7315" selection-end="7315" vertical-scroll-proportion="0.0" vertical-offset="3410" max-vertical-offset="3855">
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="22" selection-start="1037" selection-end="1037" vertical-scroll-proportion="0.5685393" vertical-offset="272" max-vertical-offset="6285">
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>

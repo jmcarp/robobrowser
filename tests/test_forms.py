@@ -26,7 +26,7 @@ class TestForm(unittest.TestCase):
         self.form = Form(self.html)
 
     def test_fields(self):
-        keys = {'vocals', 'guitar', 'drums', 'bass'}
+        keys = set(('vocals', 'guitar', 'drums', 'bass'))
         assert_equal(set(self.form.fields.keys()), keys)
         assert_equal(set(self.form.keys()), keys)
 
