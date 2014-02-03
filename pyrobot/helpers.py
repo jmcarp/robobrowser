@@ -70,7 +70,8 @@ def lowercase_attr_names(tag):
     :param Tag: BeautifulSoup tag
 
     """
-    tag.attrs = {
-        key.lower(): value
+    # Use list comprehension instead of dict comprehension for 2.6 support
+    tag.attrs = dict([
+        (key.lower(), value)
         for key, value in tag.attrs.iteritems()
-    }
+    ])

@@ -238,9 +238,14 @@ class TestHistory(unittest.TestCase):
             self.browser._cursor,
             len(self.browser._states) - 1
         )
-        with assert_raises(RoboError):
-            self.browser.forward()
+        assert_raises(
+            RoboError,
+            self.browser.forward
+        )
 
     def test_back_error(self):
-        with assert_raises(RoboError):
-            self.browser.back(5)
+        assert_raises(
+            RoboError,
+            self.browser.back,
+            5
+        )
