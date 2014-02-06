@@ -12,7 +12,7 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/pyrobot$nose.coverage" NAME="nose Coverage Results" MODIFIED="1391393285022" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/pyrobot$nose.coverage" NAME="nose Coverage Results" MODIFIED="1391658551504" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -29,10 +29,8 @@
       <file leaf-file-name="helpers.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyrobot/helpers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="45" selection-start="520" selection-end="520" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1275">
-              <folding>
-                <element signature="e#69#78#0" expanded="true" />
-              </folding>
+            <state line="18" column="45" selection-start="520" selection-end="520" vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="1275">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -40,7 +38,7 @@
       <file leaf-file-name="browser.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyrobot/browser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="27" selection-start="137" selection-end="137" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="4470">
+            <state line="9" column="27" selection-start="137" selection-end="137" vertical-scroll-proportion="-0.0" vertical-offset="135" max-vertical-offset="4470">
               <folding />
             </state>
           </provider>
@@ -49,10 +47,8 @@
       <file leaf-file-name="form.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyrobot/forms/form.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="113" column="60" selection-start="3124" selection-end="3124" vertical-scroll-proportion="0.0" vertical-offset="1530" max-vertical-offset="1995">
-              <folding>
-                <element signature="e#20#29#0" expanded="true" />
-              </folding>
+            <state line="113" column="60" selection-start="3124" selection-end="3124" vertical-scroll-proportion="0.0" vertical-offset="1695" max-vertical-offset="1995">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -60,9 +56,49 @@
       <file leaf-file-name="fields.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyrobot/forms/fields.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="70" column="26" selection-start="1971" selection-end="1971" vertical-scroll-proportion="0.0" vertical-offset="885" max-vertical-offset="3120">
+            <state line="25" column="4" selection-start="748" selection-end="748" vertical-scroll-proportion="0.0" vertical-offset="375" max-vertical-offset="3120">
               <folding>
-                <element signature="e#26#36#0" expanded="true" />
+                <marker date="1391401487000" expanded="true" signature="140:541" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="145:311" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+                <marker date="1391401487000" expanded="true" signature="352:541" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="583:788" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="588:779" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+                <marker date="1391401487000" expanded="true" signature="833:1614" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="913:1151" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="922:1057" placeholder="&quot;&quot;&quot;Construct form field from HTML string or BeautifulSoup tag....&quot;&quot;&quot;" />
+                <marker date="1391401487000" expanded="true" signature="1185:1219" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="1413:1452" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="1502:1552" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="1586:1614" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="1639:1763" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="1672:1763" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="2215:2254" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="2290:3203" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="2323:2484" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="2545:2571" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="2609:2729" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="2768:3028" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="3078:3119" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="3153:3203" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="3245:3988" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="3283:3312" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="3362:3454" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="3488:3659" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="3713:3880" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="3910:3988" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="4030:4605" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="4064:4101" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="4138:4605" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="4649:5055" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="4686:5055" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="5079:5224" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="5112:5224" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="5275:5284" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="5333:5342" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="5394:5635" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="5431:5635" placeholder="..." />
+                <marker date="1391401487000" expanded="true" signature="5440:5516" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+                <marker date="1391401487000" expanded="true" signature="5691:5700" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -73,7 +109,12 @@
           <provider selected="true" editor-type-id="text-editor">
             <state line="12" column="57" selection-start="264" selection-end="264" vertical-scroll-proportion="0.0" vertical-offset="225" max-vertical-offset="3855">
               <folding>
-                <element signature="e#0#15#0" expanded="true" />
+                <marker date="1391392536000" expanded="true" signature="5938:6152" placeholder="..." />
+                <marker date="1391392536000" expanded="true" signature="6178:6308" placeholder="..." />
+                <marker date="1391392536000" expanded="true" signature="6336:6469" placeholder="..." />
+                <marker date="1391392536000" expanded="true" signature="6498:6659" placeholder="..." />
+                <marker date="1391392536000" expanded="true" signature="6690:6857" placeholder="..." />
+                <marker date="1391392536000" expanded="true" signature="7228:7329" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -91,10 +132,8 @@
       <file leaf-file-name="test_forms.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/test_forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="399" column="46" selection-start="12822" selection-end="12822" vertical-scroll-proportion="0.29213482" vertical-offset="5855" max-vertical-offset="6300">
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
+            <state line="399" column="46" selection-start="12822" selection-end="12822" vertical-scroll-proportion="0.33854166" vertical-offset="5720" max-vertical-offset="6165">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -103,7 +142,12 @@
         <entry file="file://$PROJECT_DIR$/pyrobot/compat.py">
           <provider selected="true" editor-type-id="text-editor">
             <state line="30" column="29" selection-start="787" selection-end="787" vertical-scroll-proportion="0.0" vertical-offset="151" max-vertical-offset="840">
-              <folding />
+              <folding>
+                <marker date="1391393284000" expanded="true" signature="822:1484" placeholder="..." />
+                <marker date="1391393284000" expanded="true" signature="827:1165" placeholder="&quot;&quot;&quot;Defines a metaclass....&quot;&quot;&quot;" />
+                <marker date="1391393284000" expanded="true" signature="1192:1434" placeholder="..." />
+                <marker date="1391393284000" expanded="true" signature="1305:1434" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -111,7 +155,7 @@
       <file leaf-file-name="__init__.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyrobot/forms/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="44" selection-end="44" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
+            <state line="2" column="0" selection-start="44" selection-end="44" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="120">
               <folding>
                 <marker date="1391389582000" expanded="true" signature="14:43" placeholder="import ..." />
               </folding>
@@ -133,19 +177,19 @@
         <option value="$PROJECT_DIR$/pyrobot/forms/form.py" />
         <option value="$PROJECT_DIR$/pyrobot/__init__.py" />
         <option value="$PROJECT_DIR$/pyrobot/forms/__init__.py" />
-        <option value="$PROJECT_DIR$/pyrobot/forms/fields.py" />
         <option value="$PROJECT_DIR$/pyrobot/browser.py" />
         <option value="$PROJECT_DIR$/tests/test_browser.py" />
         <option value="$PROJECT_DIR$/pyrobot/helpers.py" />
         <option value="$PROJECT_DIR$/pyrobot/compat.py" />
         <option value="$PROJECT_DIR$/tests/test_forms.py" />
+        <option value="$PROJECT_DIR$/pyrobot/forms/fields.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="63" />
+    <option name="x" value="68" />
     <option name="y" value="31" />
-    <option name="width" value="1377" />
+    <option name="width" value="1372" />
     <option name="height" value="860" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -174,6 +218,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -240,23 +285,25 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonSdkConfigurable" />
     <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonSdkConfigurable" />
+    <property name="last_opened_file_path" value="$USER_HOME$/env/pyrobot/bin/python" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/env/pyrobot/bin/python2.7" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
       <PyConsoleSettings />
     </option>
+  </component>
+  <component name="PyCoverageOptionsProvider">
+    <option name="myUseBundledCoveragePy" value="true" />
   </component>
   <component name="RunManager" selected="Python tests.nose">
     <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
@@ -343,9 +390,6 @@
       <option name="PARAMETERS" value="" />
       <method />
     </configuration>
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
-      <method />
-    </configuration>
     <configuration default="true" type="tests" factoryName="Unittests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -367,6 +411,9 @@
       <option name="PUREUNITTEST" value="true" />
       <option name="PARAMS" value="" />
       <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -413,7 +460,7 @@
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs />
-      <option name="SDK_HOME" value="$USER_HOME$/env/robobrowser/bin/python2.7" />
+      <option name="SDK_HOME" value="$USER_HOME$/env/pyrobot/bin/python2.7" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -430,8 +477,10 @@
       <option name="PARAMS" value="" />
       <option name="USE_PARAM" value="false" />
       <RunnerSettings RunnerId="PyDebugRunner" />
+      <RunnerSettings RunnerId="PythonCover" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PyDebugRunner" />
+      <ConfigurationWrapper RunnerId="PythonCover" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
@@ -466,27 +515,28 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="63" y="31" width="1377" height="860" extended-state="0" />
+    <frame x="68" y="31" width="1372" height="860" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3295626" sideWeight="0.67027026" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24943651" sideWeight="0.67027026" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25339368" sideWeight="0.67027026" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32972974" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32972974" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -503,6 +553,34 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/tests/test_forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="399" column="46" selection-start="12822" selection-end="12822" vertical-scroll-proportion="0.0" vertical-offset="5855" max-vertical-offset="6300">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrobot/compat.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="29" selection-start="787" selection-end="787" vertical-scroll-proportion="0.0" vertical-offset="151" max-vertical-offset="840">
+          <folding>
+            <marker date="1391393284000" expanded="true" signature="822:1484" placeholder="..." />
+            <marker date="1391393284000" expanded="true" signature="827:1165" placeholder="&quot;&quot;&quot;Defines a metaclass....&quot;&quot;&quot;" />
+            <marker date="1391393284000" expanded="true" signature="1192:1434" placeholder="..." />
+            <marker date="1391393284000" expanded="true" signature="1305:1434" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrobot/forms/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="44" selection-end="44" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="120">
+          <folding>
+            <marker date="1391389582000" expanded="true" signature="14:43" placeholder="import ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6" column="0" selection-start="69" selection-end="69" vertical-scroll-proportion="-3.6" vertical-offset="0" max-vertical-offset="855">
@@ -542,12 +620,97 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pyrobot/helpers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="45" selection-start="520" selection-end="520" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1275">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/env/robobrowser/lib/python2.7/site-packages/mock.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1107" column="39" selection-start="34316" selection-end="34316" vertical-scroll-proportion="0.6696629" vertical-offset="16292" max-vertical-offset="35580" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_browser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="57" selection-start="264" selection-end="264" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="3855">
+          <folding>
+            <marker date="1391392536000" expanded="true" signature="5938:6152" placeholder="..." />
+            <marker date="1391392536000" expanded="true" signature="6178:6308" placeholder="..." />
+            <marker date="1391392536000" expanded="true" signature="6336:6469" placeholder="..." />
+            <marker date="1391392536000" expanded="true" signature="6498:6659" placeholder="..." />
+            <marker date="1391392536000" expanded="true" signature="6690:6857" placeholder="..." />
+            <marker date="1391392536000" expanded="true" signature="7228:7329" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrobot/compat.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="29" selection-start="787" selection-end="787" vertical-scroll-proportion="0.0" vertical-offset="151" max-vertical-offset="840">
+          <folding>
+            <marker date="1391393284000" expanded="true" signature="822:1484" placeholder="..." />
+            <marker date="1391393284000" expanded="true" signature="827:1165" placeholder="&quot;&quot;&quot;Defines a metaclass....&quot;&quot;&quot;" />
+            <marker date="1391393284000" expanded="true" signature="1192:1434" placeholder="..." />
+            <marker date="1391393284000" expanded="true" signature="1305:1434" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrobot/forms/fields.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="4" selection-start="748" selection-end="748" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3120">
+          <folding>
+            <marker date="1391401487000" expanded="true" signature="140:541" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="145:311" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1391401487000" expanded="true" signature="352:541" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="583:788" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="588:779" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1391401487000" expanded="true" signature="833:1614" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="913:1151" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="922:1057" placeholder="&quot;&quot;&quot;Construct form field from HTML string or BeautifulSoup tag....&quot;&quot;&quot;" />
+            <marker date="1391401487000" expanded="true" signature="1185:1219" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="1413:1452" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="1502:1552" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="1586:1614" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="1639:1763" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="1672:1763" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="2215:2254" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="2290:3203" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="2323:2484" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="2545:2571" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="2609:2729" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="2768:3028" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="3078:3119" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="3153:3203" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="3245:3988" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="3283:3312" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="3362:3454" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="3488:3659" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="3713:3880" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="3910:3988" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="4030:4605" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="4064:4101" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="4138:4605" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="4649:5055" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="4686:5055" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="5079:5224" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="5112:5224" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="5275:5284" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="5333:5342" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="5394:5635" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="5431:5635" placeholder="..." />
+            <marker date="1391401487000" expanded="true" signature="5440:5516" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1391401487000" expanded="true" signature="5691:5700" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pyrobot/forms/form.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="113" column="60" selection-start="3124" selection-end="3124" vertical-scroll-proportion="0.0" vertical-offset="1530" max-vertical-offset="1995">
-          <folding>
-            <element signature="e#20#29#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -558,53 +721,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyrobot/helpers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="45" selection-start="520" selection-end="520" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1275">
-          <folding>
-            <element signature="e#69#78#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrobot/forms/fields.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="26" selection-start="1971" selection-end="1971" vertical-scroll-proportion="0.0" vertical-offset="885" max-vertical-offset="3120">
-          <folding>
-            <element signature="e#26#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/env/robobrowser/lib/python2.7/site-packages/mock.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1107" column="39" selection-start="34316" selection-end="34316" vertical-scroll-proportion="0.6696629" vertical-offset="16292" max-vertical-offset="35580">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_browser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="57" selection-start="264" selection-end="264" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="3855">
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrobot/compat.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="29" selection-start="787" selection-end="787" vertical-scroll-proportion="0.0" vertical-offset="151" max-vertical-offset="840">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="399" column="46" selection-start="12822" selection-end="12822" vertical-scroll-proportion="0.29213482" vertical-offset="5855" max-vertical-offset="6300">
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
+        <state line="399" column="46" selection-start="12822" selection-end="12822" vertical-scroll-proportion="0.33854166" vertical-offset="5720" max-vertical-offset="6165">
+          <folding />
         </state>
       </provider>
     </entry>

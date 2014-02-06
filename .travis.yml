@@ -14,4 +14,6 @@ install:
     - pip install -r dev_requirements.txt
 
 # command to run tests, e.g. python setup.py test
-script: nosetests
+script: nosetests --with-coverage
+
+after_success: coveralls

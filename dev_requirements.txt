@@ -1,2 +1,5 @@
+coverage
+coveralls
 nose
 responses
+tox

@@ -8,8 +8,8 @@ from pyrobot.compat import with_metaclass, string_types
 from .. import helpers
 
 class ValueMeta(type):
-    """Meta-class that creates a value property on class creation. Classes
-    with this meta-class should define _get_value and optionally _set_value
+    """Metaclass that creates a value property on class creation. Classes
+    with this metaclass should define _get_value and optionally _set_value
     methods.
 
     """
@@ -21,9 +21,9 @@ class ValueMeta(type):
         super(ValueMeta, cls).__init__(name, bases, dct)
 
 class FieldMeta(ValueMeta, abc.ABCMeta):
-    """Multiply inherit from ValueMeta and ABCMeta; classes with this meta-
-    class are automatically assigned a value property and can use methods from
-    ABCMeta (e.g. abstractmethod).
+    """Multiply inherit from ValueMeta and ABCMeta; classes with this metaclass
+    are automatically assigned a value property and can use methods fromABCMeta
+    (e.g. abstractmethod).
 
     """
     pass
