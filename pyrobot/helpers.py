@@ -10,7 +10,6 @@ from pyrobot.compat import string_types, iteritems
 
 def match_text(text, tag):
     if isinstance(text, string_types):
-        print text in tag.text
         return text in tag.text
     if isinstance(text, re._pattern_type):
         return text.search(tag.text)
