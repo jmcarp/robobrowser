@@ -26,10 +26,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="helpers.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="helpers.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyrobot/helpers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="48" selection-start="1063" selection-end="1063" vertical-scroll-proportion="0.6904762" vertical-offset="175" max-vertical-offset="1335">
+            <state line="31" column="48" selection-start="1063" selection-end="1063" vertical-scroll-proportion="-11.6" vertical-offset="175" max-vertical-offset="1335">
               <folding>
                 <element signature="e#69#78#0" expanded="true" />
               </folding>
@@ -37,10 +37,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="browser.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="browser.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pyrobot/browser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="223" column="27" selection-start="5799" selection-end="5799" vertical-scroll-proportion="-13.48" vertical-offset="3008" max-vertical-offset="4455">
+            <state line="262" column="45" selection-start="6970" selection-end="6970" vertical-scroll-proportion="0.58809525" vertical-offset="3683" max-vertical-offset="4455">
               <folding>
                 <element signature="e#25#34#0" expanded="true" />
               </folding>
@@ -185,8 +185,8 @@
         <option value="$PROJECT_DIR$/pyrobot/compat.py" />
         <option value="$PROJECT_DIR$/tests/test_forms.py" />
         <option value="$PROJECT_DIR$/pyrobot/forms/fields.py" />
-        <option value="$PROJECT_DIR$/pyrobot/browser.py" />
         <option value="$PROJECT_DIR$/pyrobot/helpers.py" />
+        <option value="$PROJECT_DIR$/pyrobot/browser.py" />
       </list>
     </option>
   </component>
@@ -718,20 +718,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyrobot/browser.py">
+    <entry file="file://$PROJECT_DIR$/pyrobot/helpers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="223" column="27" selection-start="5799" selection-end="5799" vertical-scroll-proportion="-13.48" vertical-offset="3008" max-vertical-offset="4455">
+        <state line="31" column="48" selection-start="1063" selection-end="1063" vertical-scroll-proportion="-11.6" vertical-offset="175" max-vertical-offset="1335">
           <folding>
-            <element signature="e#25#34#0" expanded="true" />
+            <element signature="e#69#78#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyrobot/helpers.py">
+    <entry file="file://$PROJECT_DIR$/pyrobot/browser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="48" selection-start="1063" selection-end="1063" vertical-scroll-proportion="0.6904762" vertical-offset="175" max-vertical-offset="1335">
+        <state line="262" column="45" selection-start="6970" selection-end="6970" vertical-scroll-proportion="0.58809525" vertical-offset="3683" max-vertical-offset="4455">
           <folding>
-            <element signature="e#69#78#0" expanded="true" />
+            <element signature="e#25#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
