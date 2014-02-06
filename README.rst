@@ -36,10 +36,7 @@ Browse the web from the comfort of your Python terminal.
     browser.back()
 
     # Look up my favorite song
-    browser.follow_link(text=re.compile(r'death on two legs', re.I))
+    browser.follow_link(text='death on two legs')
     lyrics = browser.find(class_=re.compile(r'\blyrics\b'))
     lyrics.text     # '\n[Verse 1]\nYou suck my blood like a leech...
-
-
-
 

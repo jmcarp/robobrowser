@@ -9,7 +9,9 @@ from bs4.element import Tag
 from pyrobot.compat import string_types, iteritems
 
 def match_text(text, tag):
+    print tag.text, type(text)
     if isinstance(text, string_types):
+        print text in tag.text
         return text in tag.text
     if isinstance(text, re._pattern_type):
         return text.search(tag.text)
@@ -26,8 +28,10 @@ def find_all(soup, name=None, attrs=None, recursive=True, text=None,
         return soup.find_all(
             name, attrs or {}, recursive, text, limit, **kwargs
         )
+    if isinstance(text, string_types):
+        text = re.compile(re.escape(text), re.I)
     tags = soup.find_all(
-        name, attrs, recursive, **kwargs
+        name, attrs or {}, recursive, **kwargs
     )
     rv = []
     for tag in tags:

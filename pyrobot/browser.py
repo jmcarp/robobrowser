@@ -261,7 +261,6 @@ class RoboBrowser(object):
         if isinstance(value, Tag):
             link = value
         elif isinstance(value, string_types):
-            text = re.compile(re.escape(value), re.I)
             link = self.get_link(text=text, *args, **kwargs)
         elif isinstance(value, re._pattern_type):
             link = self.get_link(text=value, *args, **kwargs)

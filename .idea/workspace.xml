@@ -26,11 +26,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="helpers.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="helpers.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pyrobot/helpers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="45" selection-start="520" selection-end="520" vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="1275">
-              <folding />
+            <state line="31" column="48" selection-start="1063" selection-end="1063" vertical-scroll-proportion="0.6904762" vertical-offset="175" max-vertical-offset="1335">
+              <folding>
+                <element signature="e#69#78#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -38,8 +40,10 @@
       <file leaf-file-name="browser.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyrobot/browser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="27" selection-start="137" selection-end="137" vertical-scroll-proportion="-0.0" vertical-offset="135" max-vertical-offset="4470">
-              <folding />
+            <state line="223" column="27" selection-start="5799" selection-end="5799" vertical-scroll-proportion="-13.48" vertical-offset="3008" max-vertical-offset="4455">
+              <folding>
+                <element signature="e#25#34#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -129,10 +133,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_forms.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="test_forms.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/test_forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="399" column="46" selection-start="12822" selection-end="12822" vertical-scroll-proportion="0.33854166" vertical-offset="5720" max-vertical-offset="6165">
+            <state line="399" column="46" selection-start="12822" selection-end="12822" vertical-scroll-proportion="-5.2" vertical-offset="5720" max-vertical-offset="6165">
               <folding />
             </state>
           </provider>
@@ -177,12 +181,12 @@
         <option value="$PROJECT_DIR$/pyrobot/forms/form.py" />
         <option value="$PROJECT_DIR$/pyrobot/__init__.py" />
         <option value="$PROJECT_DIR$/pyrobot/forms/__init__.py" />
-        <option value="$PROJECT_DIR$/pyrobot/browser.py" />
         <option value="$PROJECT_DIR$/tests/test_browser.py" />
-        <option value="$PROJECT_DIR$/pyrobot/helpers.py" />
         <option value="$PROJECT_DIR$/pyrobot/compat.py" />
         <option value="$PROJECT_DIR$/tests/test_forms.py" />
         <option value="$PROJECT_DIR$/pyrobot/forms/fields.py" />
+        <option value="$PROJECT_DIR$/pyrobot/browser.py" />
+        <option value="$PROJECT_DIR$/pyrobot/helpers.py" />
       </list>
     </option>
   </component>
@@ -518,7 +522,7 @@
     <frame x="68" y="31" width="1372" height="860" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3295626" sideWeight="0.67027026" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295626" sideWeight="0.67027026" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -620,13 +624,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyrobot/helpers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="45" selection-start="520" selection-end="520" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1275">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/env/robobrowser/lib/python2.7/site-packages/mock.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1107" column="39" selection-start="34316" selection-end="34316" vertical-scroll-proportion="0.6696629" vertical-offset="16292" max-vertical-offset="35580" />
@@ -714,17 +711,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyrobot/browser.py">
+    <entry file="file://$PROJECT_DIR$/tests/test_forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="27" selection-start="137" selection-end="137" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="4470">
+        <state line="399" column="46" selection-start="12822" selection-end="12822" vertical-scroll-proportion="-5.2" vertical-offset="5720" max-vertical-offset="6165">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_forms.py">
+    <entry file="file://$PROJECT_DIR$/pyrobot/browser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="399" column="46" selection-start="12822" selection-end="12822" vertical-scroll-proportion="0.33854166" vertical-offset="5720" max-vertical-offset="6165">
-          <folding />
+        <state line="223" column="27" selection-start="5799" selection-end="5799" vertical-scroll-proportion="-13.48" vertical-offset="3008" max-vertical-offset="4455">
+          <folding>
+            <element signature="e#25#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrobot/helpers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="48" selection-start="1063" selection-end="1063" vertical-scroll-proportion="0.6904762" vertical-offset="175" max-vertical-offset="1335">
+          <folding>
+            <element signature="e#69#78#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
