@@ -1,0 +1,4 @@
+[report]
+omit =
+    pyrobot/ordereddict.py
+    pyrobot/responses.py

@@ -9,7 +9,6 @@ from bs4.element import Tag
 from pyrobot.compat import string_types, iteritems
 
 def match_text(text, tag):
-    print tag.text, type(text)
     if isinstance(text, string_types):
         print text in tag.text
         return text in tag.text
