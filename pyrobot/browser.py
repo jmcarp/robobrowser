@@ -42,7 +42,10 @@ class RoboState(object):
         return self._parsed
 
 class RoboBrowser(object):
-    """Robotic web browser."""
+    """Robotic web browser. Represents HTTP requests and responses using the
+    requests library and parsed HTML using BeautifulSoup.
+
+    """
 
     def __init__(self, auth=None, parser=None, headers=None, user_agent=None,
                  history=True):
@@ -110,6 +113,7 @@ class RoboBrowser(object):
 
     @property
     def find(self):
+        """See ``BeautifulSoup::find``."""
         try:
             return self.parsed.find
         except AttributeError:
@@ -117,6 +121,7 @@ class RoboBrowser(object):
 
     @property
     def find_all(self):
+        """See ``BeautifulSoup::find_all``."""
         try:
             return self.parsed.find_all
         except AttributeError:
@@ -124,6 +129,7 @@ class RoboBrowser(object):
 
     @property
     def select(self):
+        """See ``BeautifulSoup::select``."""
         try:
             return self.parsed.select
         except AttributeError:
@@ -256,7 +262,7 @@ class RoboBrowser(object):
         arguments.
 
         :param value: BeautifulSoup tag, string, or regex. If tag, follow its
-            href; if string or regex, search parsed document for match
+            href; if string or regex, search parsed document for match.
 
         """
         if isinstance(value, Tag):
