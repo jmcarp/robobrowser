@@ -13,7 +13,7 @@ PyRobot: Your friendly neighborhood web scraper
 .. image:: https://pypip.in/d/pyrobot/badge.png
         :target: https://crate.io/packages/pyrobot?version=latest
 
-Browse the web from the comfort of your Python terminal.
+Homepage: `http://pyrobot.readthedocs.org/ <http://pyrobot.readthedocs.org/>`_
 
 .. code-block:: python
     
@@ -33,13 +33,38 @@ Browse the web from the comfort of your Python terminal.
     songs = browser.select('.song_name')
     browser.follow_link(songs[0])
     lyrics = browser.find(class_=re.compile(r'\blyrics\b'))
-    lyrics.text     # '\n[Intro]\nIs this the real life...
+    lyrics.text     # \n[Intro]\nIs this the real life...
     
     # Back to results page
     browser.back()
 
     # Look up my favorite song
-    browser.follow_link(text='death on two legs')
+    browser.follow_link('death on two legs')
     lyrics = browser.find(class_=re.compile(r'\blyrics\b'))
-    lyrics.text     # '\n[Verse 1]\nYou suck my blood like a leech...
+    lyrics.text     # \n[Verse 1]\nYou suck my blood like a leech...
+
+PyRobot combines the best of two excellent Python libraries: 
+Requests and BeautifulSoup. PyRobot represents browser sessions using
+Requests and HTML responses using BeautifulSoup, transparently exposing 
+methods of both libraries:
+
+.. code-block:: python
+
+    from pyrobot import RoboBrowser
+    browser = RoboBrowser(user_agent='a python robot')
+    browser.open('https://github.com/')
+
+    # Inspect the browser session
+    browser.session.cookies['_gh_sess']         # BAh7Bzo...
+    browser.session.headers['User-Agent']       # a python robot
+
+    # Searched the parsed HTML
+    browser.select('div.teaser-icon')       # [<div class="teaser-icon">
+                                            # <span class="mega-octicon octicon-checklist"></span>
+                                            # </div>,
+                                            # ...
+    browser.find(class_=re.compile(r'column', re.I))    # <div class="one-third column">
+                                                        # <div class="teaser-icon">
+                                                        # <span class="mega-octicon octicon-checklist"></span>
+                                                        # ...
 

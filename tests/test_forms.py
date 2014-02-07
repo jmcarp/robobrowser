@@ -326,61 +326,113 @@ class TestRadio(unittest.TestCase):
             ['mercury', 'may', 'taylor', 'deacon']
         )
 
+    def test_initial(self):
+        assert_equal(self.input.value, 'mercury')
+
+    def test_value(self):
+        self.input.value = 'taylor'
+        assert_equal(self.input._value, 2)
+        assert_equal(self.input.value, 'taylor')
+
+    def test_value_label(self):
+        self.input.value = 'drums'
+        assert_equal(self.input._value, 2)
+        assert_equal(self.input.value, 'taylor')
+
+    def test_serialize(self):
+        assert_equal(
+            self.input.serialize(),
+            {'members': 'mercury'}
+        )
+
 class TestRadioBlank(unittest.TestCase):
 
     def setUp(self):
         self.html = '''
-            <input type="radio" name="freddie" value="mercury" />vocals<br />
-            <input type="radio" name="brian" value="may" />guitar<br />
-            <input type="radio" name="roger" value="taylor" />drums<br />
-            <input type="radio" name="john" value="deacon" />bass<br />
+            <input type="radio" name="member" value="mercury" />vocals<br />
+            <input type="radio" name="member" value="may" />guitar<br />
+            <input type="radio" name="member" value="taylor" />drums<br />
+            <input type="radio" name="member" value="deacon" />bass<br />
         '''
-
-    def test_name(self):
-        pass
-
-    def test_options(self):
-        pass
+        self.input = fields.Radio(BeautifulSoup(self.html).find_all('input'))
 
     def test_initial(self):
-        pass
-
-    def test_value(self):
-        pass
-
-    def test_value_label(self):
-        pass
+        assert_equal(self.input.value, '')
 
     def test_serialize(self):
-        pass
+        assert_equal(
+            self.input.serialize(),
+            {'member': ''}
+        )
 
 class TestCheckbox(unittest.TestCase):
 
     def setUp(self):
         self.html = '''
-            <input type="checkbox" name="freddie" value="mercury" checked />vocals<br />
-            <input type="checkbox" name="brian" value="may" />guitar<br />
-            <input type="checkbox" name="roger" value="taylor" />drums<br />
-            <input type="checkbox" name="john" value="deacon" checked />bass<br />
+            <input type="checkbox" name="member" value="mercury" checked />vocals<br />
+            <input type="checkbox" name="member" value="may" />guitar<br />
+            <input type="checkbox" name="member" value="taylor" />drums<br />
+            <input type="checkbox" name="member" value="deacon" checked />bass<br />
         '''
+        self.input = fields.Checkbox(BeautifulSoup(self.html).find_all('input'))
 
     def test_name(self):
-        pass
+        assert_equal(self.input.name, 'member')
 
     def test_options(self):
-        pass
+        assert_equal(
+            self.input.options,
+            ['mercury', 'may', 'taylor', 'deacon']
+        )
 
     def test_initial(self):
-        pass
+        assert_equal(
+            self.input.value,
+            ['mercury', 'deacon']
+        )
 
     def test_value(self):
-        pass
+        self.input.value = 'taylor'
+        assert_equal(self.input._value, [2])
+        assert_equal(self.input.value, ['taylor'])
+
+    def test_value(self):
+        self.input.value = ['taylor', 'deacon']
+        assert_equal(self.input._value, [2, 3])
+        assert_equal(self.input.value, ['taylor', 'deacon'])
 
     def test_value_label(self):
-        pass
+        self.input.value = 'drums'
+        assert_equal(self.input._value, [2])
+        assert_equal(self.input.value, ['taylor'])
 
     def test_serialize(self):
-        pass
+        assert_equal(
+            self.input.serialize(),
+            {'member': ['mercury', 'deacon']}
+        )
+
+class TestCheckboxBlank(unittest.TestCase):
+
+    def setUp(self):
+        self.html = '''
+            <input type="checkbox" name="member" value="mercury" />vocals<br />
+            <input type="checkbox" name="member" value="may" />guitar<br />
+            <input type="checkbox" name="member" value="taylor" />drums<br />
+            <input type="checkbox" name="member" value="deacon" />bass<br />
+        '''
+        self.input = fields.Checkbox(BeautifulSoup(self.html).find_all('input'))
+
+    def test_initial(self):
+        assert_equal(
+            self.input.value, []
+        )
+
+    def test_serialize(self):
+        assert_equal(
+            self.input.serialize(),
+            {'member': []}
+        )
 
 class TestFileInput(unittest.TestCase):
 

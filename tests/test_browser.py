@@ -77,6 +77,25 @@ mock_urls = mock_responses(
     ]
 )
 
+class TestHeaders(unittest.TestCase):
+
+    def test_headers(self):
+        headers = {
+            'X-Song': 'Innuendo',
+            'X-Writer': 'Freddie',
+        }
+        browser = RoboBrowser(headers=headers)
+        browser.open('http://pyrobot.com/links/')
+        assert_equal(browser.session.headers, headers)
+
+    def test_user_agent(self):
+        browser = RoboBrowser(user_agent='freddie')
+        browser.open('http://pyrobot.com/links/')
+        assert_in('User-Agent', browser.session.headers)
+        assert_equal(
+            browser.session.headers['User-Agent'], 'freddie'
+        )
+
 class TestLinks(unittest.TestCase):
 
     @mock_links

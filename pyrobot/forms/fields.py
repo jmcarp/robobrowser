@@ -107,6 +107,8 @@ class MultiOptionField(BaseField):
 
     # Property methods
     def _get_value(self):
+        if self._value is None:
+            return ''
         return self.options[self._value]
 
     def _set_value(self, value):
