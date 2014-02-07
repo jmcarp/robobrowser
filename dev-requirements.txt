@@ -2,4 +2,5 @@ coverage
 coveralls
 nose
 responses
+sphinx
 tox
