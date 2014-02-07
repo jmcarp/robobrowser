@@ -20,7 +20,7 @@ history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 setup(
     name='pyrobot',
     version='0.1.0',
-    description='Browse the web from the comfort of your Python terminal',
+    description='Your friendly neighborhood web scraper',
     author='Joshua Carp',
     author_email='jm.carp@gmail.com',
     url='https://github.com/jmcarp/pyrobot',

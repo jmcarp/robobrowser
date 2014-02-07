@@ -8,10 +8,7 @@ PyRobot: Your friendly neighborhood web scraper
         :target: https://travis-ci.org/jmcarp/pyrobot
 
 .. image:: https://coveralls.io/repos/jmcarp/pyrobot/badge.png?branch=master
-        :target: https://coveralls.io/r/jmcarp/pyrobot?branch=master
-
-.. image:: https://pypip.in/d/pyrobot/badge.png
-        :target: https://crate.io/packages/pyrobot?version=latest
+        :target: https://coveralls.io/r/jmcarp/pyrobot
 
 Homepage: `http://pyrobot.readthedocs.org/ <http://pyrobot.readthedocs.org/>`_
 
