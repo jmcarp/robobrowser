@@ -91,7 +91,7 @@ class TestHeaders(unittest.TestCase):
     def test_user_agent(self):
         browser = RoboBrowser(user_agent='freddie')
         browser.open('http://pyrobot.com/links/')
-        assert_in('User-Agent', browser.session.headers)
+        assert_true('User-Agent' in browser.session.headers)
         assert_equal(
             browser.session.headers['User-Agent'], 'freddie'
         )

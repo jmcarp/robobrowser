@@ -50,7 +50,9 @@ methods of both libraries:
 
 .. code-block:: python
 
+    import re
     from pyrobot import RoboBrowser
+
     browser = RoboBrowser(user_agent='a python robot')
     browser.open('https://github.com/')
 

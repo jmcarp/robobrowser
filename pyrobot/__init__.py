@@ -1,4 +1,3 @@
 __version__ = 0.1
 
-from browser import RoboBrowser
-
+from .browser import RoboBrowser
