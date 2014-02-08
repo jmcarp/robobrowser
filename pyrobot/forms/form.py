@@ -48,7 +48,12 @@ def _parse_fields(parsed):
 
         tag = tags.pop(0)
         tag_type = tag.name.lower()
-        name = tag.get('name').lower()
+
+        # Get name attribute, skipping if undefined
+        name = tag.get('name')
+        if name is None:
+            continue
+        name = name.lower()
 
         field = None
 
