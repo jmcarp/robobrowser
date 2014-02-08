@@ -4,7 +4,7 @@ HTML form fields
 
 import abc
 
-from pyrobot.compat import with_metaclass, string_types
+from robobrowser.compat import with_metaclass, string_types
 from .. import helpers
 
 class ValueMeta(type):

@@ -6,18 +6,18 @@ API Reference
 browser
 ------------
 
-.. automodule:: pyrobot.browser
+.. automodule:: robobrowser.browser
     :members:
 
 form
 ------------
 
-.. automodule:: pyrobot.forms.form
+.. automodule:: robobrowser.forms.form
     :members:
 
 fields
 ------------
 
-.. automodule:: pyrobot.forms.fields
+.. automodule:: robobrowser.forms.fields
     :members:
     :inherited-members:

@@ -4,9 +4,9 @@ Installation
 
 At the command line::
 
-    $ easy_install pyrobot
+    $ easy_install robobrowser
 
 Or, if you have virtualenvwrapper installed::
 
-    $ mkvirtualenv pyrobot
-    $ pip install pyrobot
+    $ mkvirtualenv robobrowser
+    $ pip install robobrowser

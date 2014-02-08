@@ -6,7 +6,7 @@ import re
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 
-from pyrobot.compat import string_types, iteritems
+from robobrowser.compat import string_types, iteritems
 
 def match_text(text, tag):
     if isinstance(text, string_types):

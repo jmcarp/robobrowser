@@ -5,9 +5,9 @@ from nose.tools import *
 import tempfile
 from bs4 import BeautifulSoup
 
-from pyrobot.compat import builtin_name
-from pyrobot.forms import Form, fields
-from pyrobot.forms.form import _parse_fields
+from robobrowser.compat import builtin_name
+from robobrowser.forms import Form, fields
+from robobrowser.forms.form import _parse_fields
 
 class TestForm(unittest.TestCase):
 
@@ -35,6 +35,17 @@ class TestParser(unittest.TestCase):
 
     def setUp(self):
         self.form = Form('<form></form>')
+
+    def test_method_default(self):
+        assert_equal(self.form.method, 'get')
+
+    def test_method(self):
+        form = Form('<form method="put"></form>')
+        assert_equal(form.method, 'put')
+
+    def test_action(self):
+        form = Form('<form action="/"></form>')
+        assert_equal(form.action, '/')
 
     def test_parse_input(self):
         html = '<input name="band" value="queen" />'

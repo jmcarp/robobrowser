@@ -4,9 +4,9 @@ from nose.tools import *
 import re
 import functools
 
-from pyrobot import responses
-from pyrobot.browser import RoboBrowser
-from pyrobot.browser import RoboError
+from robobrowser import responses
+from robobrowser.browser import RoboBrowser
+from robobrowser.browser import RoboError
 
 
 def mock_responses(resps):
@@ -38,21 +38,21 @@ class ArgCatcher(object):
 mock_links = mock_responses(
     [
         ArgCatcher(
-            responses.GET, 'http://pyrobot.com/links/',
+            responses.GET, 'http://robobrowser.com/links/',
             body=b'''
                 <a href="/link1/">sheer heart attack</a>
                 <a href="/link2/" class="song">night at the opera</a>
             '''
         ),
-        ArgCatcher(responses.GET, 'http://pyrobot.com/link1/'),
-        ArgCatcher(responses.GET, 'http://pyrobot.com/link2/'),
+        ArgCatcher(responses.GET, 'http://robobrowser.com/link1/'),
+        ArgCatcher(responses.GET, 'http://robobrowser.com/link2/'),
     ]
 )
 
 mock_forms = mock_responses(
     [
         ArgCatcher(
-            responses.GET, 'http://pyrobot.com/get/',
+            responses.GET, 'http://robobrowser.com/get/',
             body=b'''
                 <form id="bass" method="post" action="/post/">'
                     <input name="deacon" value="john" />
@@ -63,17 +63,17 @@ mock_forms = mock_responses(
             '''
         ),
         ArgCatcher(
-            responses.POST, 'http://pyrobot.com/post/',
+            responses.POST, 'http://robobrowser.com/post/',
         ),
     ]
 )
 
 mock_urls = mock_responses(
     [
-        ArgCatcher(responses.GET, 'http://pyrobot.com/page1/'),
-        ArgCatcher(responses.GET, 'http://pyrobot.com/page2/'),
-        ArgCatcher(responses.GET, 'http://pyrobot.com/page3/'),
-        ArgCatcher(responses.GET, 'http://pyrobot.com/page4/'),
+        ArgCatcher(responses.GET, 'http://robobrowser.com/page1/'),
+        ArgCatcher(responses.GET, 'http://robobrowser.com/page2/'),
+        ArgCatcher(responses.GET, 'http://robobrowser.com/page3/'),
+        ArgCatcher(responses.GET, 'http://robobrowser.com/page4/'),
     ]
 )
 
@@ -85,12 +85,12 @@ class TestHeaders(unittest.TestCase):
             'X-Writer': 'Freddie',
         }
         browser = RoboBrowser(headers=headers)
-        browser.open('http://pyrobot.com/links/')
+        browser.open('http://robobrowser.com/links/')
         assert_equal(browser.session.headers, headers)
 
     def test_user_agent(self):
         browser = RoboBrowser(user_agent='freddie')
-        browser.open('http://pyrobot.com/links/')
+        browser.open('http://robobrowser.com/links/')
         assert_true('User-Agent' in browser.session.headers)
         assert_equal(
             browser.session.headers['User-Agent'], 'freddie'
@@ -101,7 +101,7 @@ class TestLinks(unittest.TestCase):
     @mock_links
     def setUp(self):
         self.browser = RoboBrowser()
-        self.browser.open('http://pyrobot.com/links/')
+        self.browser.open('http://robobrowser.com/links/')
 
     @mock_links
     def test_get_link(self):
@@ -122,29 +122,29 @@ class TestLinks(unittest.TestCase):
     def test_follow_link_tag(self):
         link = self.browser.get_link(text=re.compile('sheer'))
         self.browser.follow_link(link)
-        assert_equal(self.browser.url, 'http://pyrobot.com/link1/')
+        assert_equal(self.browser.url, 'http://robobrowser.com/link1/')
 
     @mock_links
     def test_follow_link_text(self):
         self.browser.follow_link('heart attack')
-        assert_equal(self.browser.url, 'http://pyrobot.com/link1/')
+        assert_equal(self.browser.url, 'http://robobrowser.com/link1/')
 
     @mock_links
     def test_follow_link_regex(self):
         self.browser.follow_link(re.compile(r'opera'))
-        assert_equal(self.browser.url, 'http://pyrobot.com/link2/')
+        assert_equal(self.browser.url, 'http://robobrowser.com/link2/')
 
     @mock_links
     def test_follow_link_bs_args(self):
         self.browser.follow_link(class_=re.compile(r'song'))
-        assert_equal(self.browser.url, 'http://pyrobot.com/link2/')
+        assert_equal(self.browser.url, 'http://robobrowser.com/link2/')
 
 class TestForms(unittest.TestCase):
 
     @mock_forms
     def setUp(self):
         self.browser = RoboBrowser()
-        self.browser.open('http://pyrobot.com/get/')
+        self.browser.open('http://robobrowser.com/get/')
 
     @mock_forms
     def test_get_forms(self):
@@ -154,13 +154,13 @@ class TestForms(unittest.TestCase):
     @mock_forms
     def test_get_form_by_id(self):
         form = self.browser.get_form('bass')
-        assert_equal(form._parsed.get('id'), 'bass')
+        assert_equal(form.parsed.get('id'), 'bass')
 
     @mock_forms
     def test_submit_form(self):
         form = self.browser.get_form()
         self.browser.submit_form(form)
-        assert_equal(self.browser.url, 'http://pyrobot.com/post/')
+        assert_equal(self.browser.url, 'http://robobrowser.com/post/')
 
 class TestHistoryInternals(unittest.TestCase):
 
@@ -171,13 +171,13 @@ class TestHistoryInternals(unittest.TestCase):
     def test_open_appends_to_history(self):
         assert_equal(len(self.browser._states), 0)
         assert_equal(self.browser._cursor, -1)
-        self.browser.open('http://pyrobot.com/page1/')
+        self.browser.open('http://robobrowser.com/page1/')
         assert_equal(len(self.browser._states), 1)
         assert_equal(self.browser._cursor, 0)
 
     @mock_forms
     def test_submit_appends_to_history(self):
-        self.browser.open('http://pyrobot.com/get/')
+        self.browser.open('http://robobrowser.com/get/')
         form = self.browser.get_form()
         self.browser.submit_form(form)
 
@@ -186,10 +186,10 @@ class TestHistoryInternals(unittest.TestCase):
 
     @mock_urls
     def test_open_clears_history_after_back(self):
-        self.browser.open('http://pyrobot.com/page1/')
-        self.browser.open('http://pyrobot.com/page2/')
+        self.browser.open('http://robobrowser.com/page1/')
+        self.browser.open('http://robobrowser.com/page2/')
         self.browser.back()
-        self.browser.open('http://pyrobot.com/page3/')
+        self.browser.open('http://robobrowser.com/page3/')
         assert_equal(len(self.browser._states), 2)
         assert_equal(self.browser._cursor, 1)
 
@@ -197,16 +197,16 @@ class TestHistoryInternals(unittest.TestCase):
     def test_state_deque_max_length(self):
         browser = RoboBrowser(history=5)
         for _ in range(5):
-            browser.open('http://pyrobot.com/page1/')
+            browser.open('http://robobrowser.com/page1/')
         assert_equal(len(browser._states), 5)
-        browser.open('http://pyrobot.com/page2/')
+        browser.open('http://robobrowser.com/page2/')
         assert_equal(len(browser._states), 5)
 
     @mock_urls
     def test_state_deque_no_history(self):
         browser = RoboBrowser(history=False)
         for _ in range(5):
-            browser.open('http://pyrobot.com/page1/')
+            browser.open('http://robobrowser.com/page1/')
             assert_equal(len(browser._states), 1)
             assert_equal(browser._cursor, 0)
 
@@ -215,22 +215,22 @@ class TestHistory(unittest.TestCase):
     @mock_urls
     def setUp(self):
         self.browser = RoboBrowser(history=True)
-        self.browser.open('http://pyrobot.com/page1/')
-        self.browser.open('http://pyrobot.com/page2/')
-        self.browser.open('http://pyrobot.com/page3/')
+        self.browser.open('http://robobrowser.com/page1/')
+        self.browser.open('http://robobrowser.com/page2/')
+        self.browser.open('http://robobrowser.com/page3/')
 
     def test_back(self):
         self.browser.back()
         assert_equal(
             self.browser.url,
-            'http://pyrobot.com/page2/'
+            'http://robobrowser.com/page2/'
         )
 
     def test_back_n(self):
         self.browser.back(n=2)
         assert_equal(
             self.browser.url,
-            'http://pyrobot.com/page1/'
+            'http://robobrowser.com/page1/'
         )
 
     def test_forward(self):
@@ -238,7 +238,7 @@ class TestHistory(unittest.TestCase):
         self.browser.forward()
         assert_equal(
             self.browser.url,
-            'http://pyrobot.com/page3/'
+            'http://robobrowser.com/page3/'
         )
 
     def test_forward_n(self):
@@ -246,13 +246,13 @@ class TestHistory(unittest.TestCase):
         self.browser.forward(n=2)
         assert_equal(
             self.browser.url,
-            'http://pyrobot.com/page3/'
+            'http://robobrowser.com/page3/'
         )
 
     @mock_urls
     def test_open_clears_forward(self):
         self.browser.back(n=2)
-        self.browser.open('http://pyrobot.com/page4/')
+        self.browser.open('http://robobrowser.com/page4/')
         assert_equal(
             self.browser._cursor,
             len(self.browser._states) - 1

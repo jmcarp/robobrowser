@@ -14,6 +14,6 @@ install:
     - pip install coverage coveralls nose responses
 
 # command to run tests, e.g. python setup.py test
-script: nosetests --with-coverage --cover-package=pyrobot
+script: nosetests --with-coverage --cover-package=robobrowser
 
 after_success: coveralls

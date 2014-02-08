@@ -2,6 +2,6 @@
 Usage
 ========
 
-To use pyrobot in a project::
+To use robobrowser in a project::
 
-	import pyrobot
+	import robobrowser

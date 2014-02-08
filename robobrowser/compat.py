@@ -31,7 +31,7 @@ else:
     builtin_name = 'builtins'
 
 def with_metaclass(meta, *bases):
-    '''Defines a metaclass.
+    """Defines a metaclass.
 
     Creates a dummy class with a dummy metaclass. When subclassed, the dummy
     metaclass is used, which has a constructor that instantiates a
@@ -39,7 +39,8 @@ def with_metaclass(meta, *bases):
     dummy metaclass are not in the inheritance tree.
 
     Credit to Armin Ronacher.
-    '''
+
+    """
     class metaclass(meta):
         __call__ = type.__call__
         __init__ = type.__init__

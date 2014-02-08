@@ -3,7 +3,7 @@ HTML forms
 """
 
 import re
-from pyrobot.compat import OrderedDict
+from robobrowser.compat import OrderedDict
 
 from . import fields
 from .. import helpers
@@ -88,10 +88,13 @@ class Form(object):
     """Representation of an HTML form."""
 
     def __init__(self, parsed):
-        self._parsed = helpers.ensure_soup(parsed)
-        self.action = self._parsed.get('action', 'get')
-        self.method = self._parsed.get('method')
-        self.fields = _parse_fields(self._parsed)
+        parsed = helpers.ensure_soup(parsed)
+        if parsed.name != 'form':
+            parsed = parsed.find('form')
+        self.parsed = parsed
+        self.action = self.parsed.get('action')
+        self.method = self.parsed.get('method', 'get')
+        self.fields = _parse_fields(self.parsed)
 
     def __repr__(self):
         state = ', '.join(

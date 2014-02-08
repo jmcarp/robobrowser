@@ -24,7 +24,7 @@ clean-pyc:
 	find . -name '*~' -exec rm -f {} +
 
 lint:
-	flake8 pyrobot tests
+	flake8 robobrowser tests
 
 test:
 	python setup.py test
@@ -33,15 +33,15 @@ test-all:
 	tox
 
 coverage:
-	coverage run --source pyrobot setup.py test
+	coverage run --source robobrowser setup.py test
 	coverage report -m
 	coverage html
 	open htmlcov/index.html
 
 docs:
-	rm -f docs/pyrobot.rst
+	rm -f docs/robobrowser.rst
 	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ pyrobot
+	sphinx-apidoc -o docs/ robobrowser
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	open docs/_build/html/index.html

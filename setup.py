@@ -18,16 +18,16 @@ readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(
-    name='pyrobot',
+    name='robobrowser',
     version='0.1.0',
     description='Your friendly neighborhood web scraper',
     author='Joshua Carp',
     author_email='jm.carp@gmail.com',
-    url='https://github.com/jmcarp/pyrobot',
+    url='https://github.com/jmcarp/robobrowser',
     packages=[
-        'pyrobot',
+        'robobrowser',
     ],
-    package_dir={'pyrobot': 'pyrobot'},
+    package_dir={'robobrowser': 'robobrowser'},
     include_package_data=True,
     install_requires=[
         'nose',
@@ -35,7 +35,7 @@ setup(
     ],
     license='MIT',
     zip_safe=False,
-    keywords='pyrobot',
+    keywords='robobrowser',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',

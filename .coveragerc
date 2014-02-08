@@ -1,7 +1,7 @@
 [report]
 omit =
-    pyrobot/ordereddict.py
-    pyrobot/responses.py
+    robobrowser/ordereddict.py
+    robobrowser/responses.py
     */python?.?/*
     */lib-python/?.?/*.py
     */pypy/*
