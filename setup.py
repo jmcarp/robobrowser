@@ -5,10 +5,8 @@ import os
 import sys
 
 
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+from setuptools import setup, find_packages
+from pip.req import parse_requirements
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
@@ -16,6 +14,10 @@ if sys.argv[-1] == 'publish':
 
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
+requirements = [
+    str(requirement.req)
+    for requirement in parse_requirements('requirements.txt')
+]
 
 setup(
     name='robobrowser',
@@ -24,14 +26,12 @@ setup(
     author='Joshua Carp',
     author_email='jm.carp@gmail.com',
     url='https://github.com/jmcarp/robobrowser',
-    packages=[
-        'robobrowser',
-    ],
+    packages=find_packages(),
     package_dir={'robobrowser': 'robobrowser'},
     include_package_data=True,
-    install_requires=[
+    install_requires=requirements,
+    tests_require=[
         'nose',
-        'responses',
     ],
     license='MIT',
     zip_safe=False,
