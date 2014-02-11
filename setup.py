@@ -21,7 +21,7 @@ requirements = [
 
 setup(
     name='robobrowser',
-    version='0.1.0',
+    version='0.1.1',
     description='Your friendly neighborhood web scraper',
     author='Joshua Carp',
     author_email='jm.carp@gmail.com',
