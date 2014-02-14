@@ -25,7 +25,7 @@ def _group_flat_tags(tag, tags):
     """
     grouped = [tag]
     name = tag.get('name').lower()
-    while tags and tags[0].get('name').lower() == name:
+    while tags and tags[0].get('name') and tags[0].get('name').lower() == name:
         grouped.append(tags.pop(0))
     return grouped
 

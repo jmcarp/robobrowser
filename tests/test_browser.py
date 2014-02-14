@@ -63,6 +63,18 @@ mock_forms = mock_responses(
             '''
         ),
         ArgCatcher(
+            responses.GET, 'http://robobrowser.com/noname/',
+            body=b'''
+                <form name="input" action="action" method="get">
+                <input type="checkbox" name="vehicle" value="Bike">
+                    I have a bike<br>
+                <input type="checkbox" name="vehicle" value="Car">I have a car
+                <br><br>
+                <input type="submit" value="Submit">
+                </form>
+            '''
+        ),
+        ArgCatcher(
             responses.POST, 'http://robobrowser.com/post/',
         ),
     ]
@@ -161,6 +173,18 @@ class TestForms(unittest.TestCase):
         form = self.browser.get_form()
         self.browser.submit_form(form)
         assert_equal(self.browser.url, 'http://robobrowser.com/post/')
+
+class TestFormsInputNoName(unittest.TestCase):
+
+    @mock_forms
+    def setUp(self):
+        self.browser = RoboBrowser()
+        self.browser.open('http://robobrowser.com/noname/')
+
+    @mock_forms
+    def test_get_forms(self):
+        forms = self.browser.get_forms()
+        assert_equal(len(forms), 1)
 
 class TestHistoryInternals(unittest.TestCase):
 
