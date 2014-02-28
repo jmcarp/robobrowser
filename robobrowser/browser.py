@@ -69,7 +69,7 @@ class RoboBrowser(object):
         headers = headers or {}
         if user_agent is not None:
             headers['User-Agent'] = user_agent
-        self.session.headers = headers
+        self.session.headers.update(headers)
 
         self.parser = parser
 

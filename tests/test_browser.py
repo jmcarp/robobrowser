@@ -2,6 +2,7 @@ import unittest
 from nose.tools import *
 
 import re
+import requests
 import functools
 
 from robobrowser import responses
@@ -86,7 +87,8 @@ class TestHeaders(unittest.TestCase):
         }
         browser = RoboBrowser(headers=headers)
         browser.open('http://robobrowser.com/links/')
-        assert_equal(browser.session.headers, headers)
+        for key, value in headers.items():
+            assert_equal(browser.session.headers[key], value)
 
     def test_user_agent(self):
         browser = RoboBrowser(user_agent='freddie')
@@ -95,6 +97,10 @@ class TestHeaders(unittest.TestCase):
         assert_equal(
             browser.session.headers['User-Agent'], 'freddie'
         )
+
+    def test_default_headers(self):
+        browser = RoboBrowser()
+        assert_equal(browser.session.headers, requests.Session().headers)
 
 class TestLinks(unittest.TestCase):
 
