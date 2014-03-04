@@ -1,3 +1,4 @@
+import mock
 import unittest
 from nose.tools import *
 
@@ -273,4 +274,30 @@ class TestHistory(unittest.TestCase):
             RoboError,
             self.browser.back,
             5
+        )
+
+class TestTimeout(unittest.TestCase):
+
+    @mock.patch('requests.Session.get')
+    def test_no_timeout(self, mock_get):
+        browser = RoboBrowser()
+        browser.open('http://robobrowser.com/')
+        mock_get.assert_called_once_with(
+            'http://robobrowser.com/', timeout=None
+        )
+
+    @mock.patch('requests.Session.get')
+    def test_instance_timeout(self, mock_get):
+        browser = RoboBrowser(timeout=5)
+        browser.open('http://robobrowser.com/')
+        mock_get.assert_called_once_with(
+            'http://robobrowser.com/', timeout=5
+        )
+
+    @mock.patch('requests.Session.get')
+    def test_call_timeout(self, mock_get):
+        browser = RoboBrowser(timeout=5)
+        browser.open('http://robobrowser.com/', timeout=10)
+        mock_get.assert_called_once_with(
+            'http://robobrowser.com/', timeout=10
         )

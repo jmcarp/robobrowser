@@ -48,7 +48,7 @@ class RoboBrowser(object):
     """
 
     def __init__(self, auth=None, parser=None, headers=None, user_agent=None,
-                 history=True):
+                 history=True, timeout=None):
         """RoboBrowser constructor.
 
         :param tuple auth: Tuple of (username, password)
@@ -57,6 +57,7 @@ class RoboBrowser(object):
         :param str user_agent: Default user-agent
         :param history: History length; infinite if True, 1 if falsy, else
             takes integer value
+        :param int timeout: Default timeout in seconds
 
         """
         self.session = requests.Session()
@@ -72,6 +73,7 @@ class RoboBrowser(object):
         self.session.headers.update(headers)
 
         self.parser = parser
+        self.timeout = timeout
 
         # Configure history
         self.history = history
@@ -147,13 +149,14 @@ class RoboBrowser(object):
             url
         )
 
-    def open(self, url):
+    def open(self, url, timeout=None):
         """Open a URL.
 
         :param str url: URL
+        :param int timeout: Timeout in seconds
 
         """
-        response = self.session.get(url)
+        response = self.session.get(url, timeout=timeout or self.timeout)
         self._update_state(response)
 
     def _update_state(self, response):
