@@ -8,8 +8,9 @@ from bs4 import BeautifulSoup
 from bs4.element import Tag
 
 from robobrowser.compat import urlparse, string_types
-from . import helpers
-from .forms.form import Form
+from robobrowser import helpers
+from robobrowser.forms.form import Form
+from robobrowser.cache import RoboHTTPAdapter
 
 class RoboError(Exception): pass
 
@@ -48,7 +49,8 @@ class RoboBrowser(object):
     """
 
     def __init__(self, auth=None, parser=None, headers=None, user_agent=None,
-                 history=True, timeout=None):
+                 history=True, timeout=None, cache=False, cache_patterns=None,
+                 max_age=None, max_count=None):
         """RoboBrowser constructor.
 
         :param tuple auth: Tuple of (username, password)
@@ -58,6 +60,10 @@ class RoboBrowser(object):
         :param history: History length; infinite if True, 1 if falsy, else
             takes integer value
         :param int timeout: Default timeout in seconds
+        :param bool cache: Cache responses
+        :param list cache_patterns: List of URL patterns for cache
+        :param timedelta max_age: Max age for cache
+        :param int max_count: Max count for cache
 
         """
         self.session = requests.Session()
@@ -74,6 +80,19 @@ class RoboBrowser(object):
 
         self.parser = parser
         self.timeout = timeout
+
+        # Set up caching
+        if cache:
+            adapter = RoboHTTPAdapter(max_age=max_age, max_count=max_count)
+            cache_patterns = cache_patterns or ['http://', 'https://']
+            for pattern in cache_patterns:
+                self.session.mount(pattern, adapter)
+        elif max_age:
+            raise ValueError('Parameter `max_age` is provided, '
+                             'but caching is turned off')
+        elif max_count:
+            raise ValueError('Parameter `max_count` is provided, '
+                             'but caching is turned off')
 
         # Configure history
         self.history = history
@@ -163,7 +182,7 @@ class RoboBrowser(object):
         """Update the state of the browser. Create a new state object, and
         append to or overwrite the browser's state history.
 
-        :param requests.Response: New response object
+        :param requests.MockResponse: New response object
 
         """
         # Clear trailing states

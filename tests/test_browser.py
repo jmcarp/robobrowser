@@ -9,6 +9,7 @@ import functools
 from robobrowser import responses
 from robobrowser.browser import RoboBrowser
 from robobrowser.browser import RoboError
+from tests.utils import ArgCatcher
 
 
 def mock_responses(resps):
@@ -27,15 +28,6 @@ def mock_responses(resps):
             return func(*args, **kwargs)
         return wrapped
     return wrapper
-
-class ArgCatcher(object):
-    """Simple class for memorizing positional and keyword arguments. Used to
-    capture responses for mock_responses.
-
-    """
-    def __init__(self, *args, **kwargs):
-        self.args = args
-        self.kwargs = kwargs
 
 mock_links = mock_responses(
     [
