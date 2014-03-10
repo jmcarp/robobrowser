@@ -35,7 +35,7 @@ class TestCache(unittest.TestCase):
         response = KwargSetter(url=url, status_code=200)
         now = datetime.datetime.now()
         self.cache.store(response)
-        assert_in(url, self.cache.data)
+        assert_true(url in self.cache.data)
         assert_equal(self.cache.data[url]['response'], response)
         date_diff = self.cache.data[url]['date'] - now
         assert_true(date_diff < datetime.timedelta(seconds=0.1))
@@ -44,7 +44,7 @@ class TestCache(unittest.TestCase):
         url = 'http://robobrowser.com/'
         response = KwargSetter(url=url, status_code=400)
         self.cache.store(response)
-        assert_not_in(url, self.cache.data)
+        assert_false(url in self.cache.data)
 
     def test_retrieve_not_stored(self):
         request = KwargSetter(url='http://robobrowser.com/', method='GET')
