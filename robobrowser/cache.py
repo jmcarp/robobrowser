@@ -7,7 +7,7 @@ import logging
 import datetime
 from requests.adapters import HTTPAdapter
 
-from robobrowser.ordereddict import OrderedDict
+from robobrowser.compat import OrderedDict
 
 logger = logging.getLogger(__name__)
 
