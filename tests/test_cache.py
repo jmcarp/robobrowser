@@ -75,7 +75,8 @@ class TestCache(unittest.TestCase):
         self.cache.max_age = now - self.cache.data[2]['date']
         self.cache._reduce_age(now)
         assert_equal(len(self.cache.data), 3)
-        assert_equal(self.cache.data.keys(), [2, 3, 4])
+        # Cast keys to list for 3.3 compatibility
+        assert_equal(list(self.cache.data.keys()), [2, 3, 4])
 
     def test_reduce_count(self):
         for idx in range(5):
@@ -85,4 +86,5 @@ class TestCache(unittest.TestCase):
         self.cache.max_count = 3
         self.cache._reduce_count()
         assert_equal(len(self.cache.data), 3)
-        assert_equal(self.cache.data.keys(), [2, 3, 4])
+        # Cast keys to list for 3.3 compatibility
+        assert_equal(list(self.cache.data.keys()), [2, 3, 4])
