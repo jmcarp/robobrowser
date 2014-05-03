@@ -1,8 +1,12 @@
 """
-Convenience methods for working with BeautifulSoup objects.
+Miscellaneous helper functions
 """
 
 import re
+import time
+import logging
+import functools
+
 from bs4 import BeautifulSoup
 from bs4.element import Tag
 
@@ -79,3 +83,25 @@ def lowercase_attr_names(tag):
         (key.lower(), value)
         for key, value in iteritems(tag.attrs)
     ])
+
+def retry(tries, errors=None, delay=3, multiplier=2, logger=None):
+
+    errors = errors or Exception
+    logger = logger or logging.getLogger(__name__)
+
+    def decorator(func):
+
+        @functools.wraps(func)
+        def decorated(*args, **kwargs):
+            mdelay = delay
+            for _ in range(tries - 1):
+                try:
+                    return func(*args, **kwargs)
+                except errors as error:
+                    logger.exception(error)
+                    time.sleep(mdelay)
+                    mdelay *= multiplier
+                return func(*args, **kwargs)
+        return decorated
+
+    return decorator
