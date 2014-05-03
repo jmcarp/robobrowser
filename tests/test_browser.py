@@ -159,7 +159,10 @@ class TestForms(unittest.TestCase):
     def test_submit_form(self):
         form = self.browser.get_form()
         self.browser.submit_form(form)
-        assert_equal(self.browser.url, 'http://robobrowser.com/post/')
+        assert_equal(
+            self.browser.url,
+            'http://robobrowser.com/post/?deacon=john'
+        )
 
 class TestHistoryInternals(unittest.TestCase):
 

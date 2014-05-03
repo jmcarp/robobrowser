@@ -14,10 +14,12 @@ from robobrowser.forms.form import Form
 from robobrowser.cache import RoboHTTPAdapter
 from robobrowser.helpers import retry
 
+
 class RoboError(Exception): pass
 
 _link_ptn = re.compile(r'^(a|button)$', re.I)
 _form_ptn = re.compile(r'^form$', re.I)
+
 
 class RoboState(object):
     """Representation of a browser state. Wraps the browser and response, and
@@ -43,6 +45,7 @@ class RoboState(object):
                 features=self.browser.parser,
             )
         return self._parsed
+
 
 class RoboBrowser(object):
     """Robotic web browser. Represents HTTP requests and responses using the
@@ -322,12 +325,12 @@ class RoboBrowser(object):
 
         """
         # Get HTTP verb
-        func = getattr(self.session, form.method.lower())
+        method = form.method.upper()
 
         # Send request
         url = self._build_url(form.action) or self.url
-        data = form.serialize()
-        response = func(url, **data)
+        form_data = form.serialize()
+        response = self.session.request(method, url, **form_data.to_requests())
 
         # Update history
         self._update_state(response)

@@ -1,18 +1,22 @@
 """
-HTML forms
+HTML forms.
 """
 
 import re
+import collections
+
 from robobrowser.compat import OrderedDict
 
 from . import fields
 from .. import helpers
+
 
 _tags = ['input', 'textarea', 'select']
 _tag_ptn = re.compile(
     '|'.join(_tags),
     re.I
 )
+
 
 def _group_flat_tags(tag, tags):
     """Extract tags sharing the same name as the provided tag. Used to collect
@@ -28,6 +32,7 @@ def _group_flat_tags(tag, tags):
     while tags and tags[0].get('name').lower() == name:
         grouped.append(tags.pop(0))
     return grouped
+
 
 def _parse_fields(parsed):
     """Parse form fields from HTML.
@@ -84,6 +89,42 @@ def _parse_fields(parsed):
 
     return rv
 
+
+class FormData(object):
+    """Container for serialized form outputs that knows how to export to
+    the format expected by Requests. By default, form values are stored in
+    `payload`.
+
+    """
+    def __init__(self):
+        self.payload = {}
+        self.options = collections.defaultdict(dict)
+
+    def add(self, data, key=None):
+        """Add field values to container.
+
+        :param dict data: Serialized values for field
+        :param str key: Optional key; if not provided, values will be added
+            to `self.payload`.
+
+        """
+        sink = self.options[key] if key is not None else self.payload
+        sink.update(data)
+
+    def to_requests(self, method='get'):
+        """Export to Requests format.
+
+        :param str method: Request method
+        :returns: Dict of keyword arguments formatted for `requests.request`
+
+        """
+        out = {}
+        payload_key = 'params' if method.lower() == 'get' else 'data'
+        out[payload_key] = self.payload
+        out.update(self.options)
+        return out
+
+
 class Form(object):
     """Representation of an HTML form."""
 
@@ -117,19 +158,12 @@ class Form(object):
         self.fields[key].value = value
 
     def serialize(self):
-        """Serialize each form field and collect the results in a dictionary
-        of dictionaries. Different fields may serialize their contents to
-        different sub-dictionaries: most serialize to data, but file inputs
-        serialize to files. Sub-dictionary keys should correspond to
-        parameters of requests.Request.
+        """Serialize each form field to a FormData container.
 
-        :return dict: Dict-of-dicts of serialized data
+        :returns: FormData instance
 
         """
-        rv = {}
+        form_data = FormData()
         for field in self.fields.values():
-            key = field._serialize_key
-            if key not in rv:
-                rv[key] = {}
-            rv[key].update(field.serialize())
-        return rv
+            form_data.add(field.serialize(), field.form_data_key)
+        return form_data
