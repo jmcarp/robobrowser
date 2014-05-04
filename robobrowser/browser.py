@@ -58,6 +58,7 @@ class RoboBrowser(object):
     :param history: History length; infinite if True, 1 if falsy, else
         takes integer value
     :param int timeout: Default timeout in seconds
+    :param bool verify: Verify SSL
 
     :param bool cache: Cache responses
     :param list cache_patterns: List of URL patterns for cache
@@ -71,8 +72,8 @@ class RoboBrowser(object):
 
     """
     def __init__(self, auth=None, parser=None, headers=None, user_agent=None,
-                 history=True, timeout=None, cache=False, cache_patterns=None,
-                 max_age=None, max_count=None, tries=None,
+                 history=True, timeout=None, verify=True, cache=False,
+                 cache_patterns=None, max_age=None, max_count=None, tries=None,
                  errors=RequestException, delay=None, multiplier=None):
 
         self.session = requests.Session()
@@ -89,6 +90,7 @@ class RoboBrowser(object):
 
         self.parser = parser
         self.timeout = timeout
+        self.verify = verify
 
         # Set up caching
         if cache:
@@ -184,14 +186,19 @@ class RoboBrowser(object):
             url
         )
 
-    def open(self, url, timeout=None):
+    def open(self, url, timeout=None, verify=None):
         """Open a URL.
 
         :param str url: URL
         :param int timeout: Timeout in seconds
+        :param bool verify: Verify SSL
 
         """
-        response = self.session.get(url, timeout=timeout or self.timeout)
+        response = self.session.get(
+            url,
+            timeout=timeout or self.timeout,
+            verify=verify if verify is not None else self.verify,
+        )
         self._update_state(response)
 
     def _update_state(self, response):

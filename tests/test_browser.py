@@ -271,6 +271,7 @@ class TestHistory(unittest.TestCase):
             5
         )
 
+
 class TestTimeout(unittest.TestCase):
 
     @mock.patch('requests.Session.get')
@@ -278,7 +279,7 @@ class TestTimeout(unittest.TestCase):
         browser = RoboBrowser()
         browser.open('http://robobrowser.com/')
         mock_get.assert_called_once_with(
-            'http://robobrowser.com/', timeout=None
+            'http://robobrowser.com/', timeout=None, verify=True
         )
 
     @mock.patch('requests.Session.get')
@@ -286,7 +287,7 @@ class TestTimeout(unittest.TestCase):
         browser = RoboBrowser(timeout=5)
         browser.open('http://robobrowser.com/')
         mock_get.assert_called_once_with(
-            'http://robobrowser.com/', timeout=5
+            'http://robobrowser.com/', timeout=5, verify=True
         )
 
     @mock.patch('requests.Session.get')
@@ -294,5 +295,32 @@ class TestTimeout(unittest.TestCase):
         browser = RoboBrowser(timeout=5)
         browser.open('http://robobrowser.com/', timeout=10)
         mock_get.assert_called_once_with(
-            'http://robobrowser.com/', timeout=10
+            'http://robobrowser.com/', timeout=10, verify=True
+        )
+
+
+class TestVerify(unittest.TestCase):
+
+    @mock.patch('requests.Session.get')
+    def test_no_verify(self, mock_get):
+        browser = RoboBrowser()
+        browser.open('http://robobrowser.com/')
+        mock_get.assert_called_once_with(
+            'http://robobrowser.com/', verify=True, timeout=None
+        )
+
+    @mock.patch('requests.Session.get')
+    def test_instance_verify(self, mock_get):
+        browser = RoboBrowser(verify=True)
+        browser.open('http://robobrowser.com/')
+        mock_get.assert_called_once_with(
+            'http://robobrowser.com/', verify=True, timeout=None
+        )
+
+    @mock.patch('requests.Session.get')
+    def test_call_verify(self, mock_get):
+        browser = RoboBrowser(verify=True)
+        browser.open('http://robobrowser.com/', verify=False)
+        mock_get.assert_called_once_with(
+            'http://robobrowser.com/', verify=False, timeout=None
         )
