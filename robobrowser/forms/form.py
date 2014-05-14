@@ -5,7 +5,7 @@ HTML forms.
 import re
 import collections
 
-from robobrowser.compat import OrderedDict
+from robobrowser.compat import OrderedDict, iteritems
 
 from . import fields
 from .. import helpers
@@ -141,7 +141,7 @@ class Form(object):
         state = ', '.join(
             [
                 '{0}={1}'.format(name, field.value)
-                for name, field in self.fields.iteritems()
+                for name, field in iteritems(self.fields)
             ]
         )
         if state:
