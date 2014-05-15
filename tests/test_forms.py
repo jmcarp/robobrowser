@@ -63,6 +63,18 @@ class TestForm(unittest.TestCase):
         assert_equal(set(self.form.fields.keys()), keys)
         assert_equal(set(self.form.keys()), keys)
 
+    def test_repr(self):
+        assert_equal(
+            repr(self.form),
+            '<RoboForm vocals=, guitar=, drums=roger, bass=>'
+        )
+
+    def test_repr_empty(self):
+        assert_equal(
+            repr(Form('<form></form>')),
+            '<RoboForm>'
+        )
+
 
 class TestParser(unittest.TestCase):
 
