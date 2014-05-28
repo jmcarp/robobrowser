@@ -337,7 +337,7 @@ class RoboBrowser(object):
         # Send request
         url = self._build_url(form.action) or self.url
         form_data = form.serialize()
-        response = self.session.request(method, url, **form_data.to_requests())
+        response = self.session.request(method, url, **form_data.to_requests(method))
 
         # Update history
         self._update_state(response)
