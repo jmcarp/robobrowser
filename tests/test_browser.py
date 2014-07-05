@@ -43,7 +43,23 @@ mock_links = mock_responses(
     ]
 )
 
-mock_forms = mock_responses(
+mock_forms_get = mock_responses(
+    [
+        ArgCatcher(
+            responses.GET, 'http://robobrowser.com/get/',
+            body=b'''
+                <form id="bass" method="get" action="/get/">'
+                    <input name="deacon" value="john" />
+                </form>
+                <form id="drums" method="post" action="/get/">'
+                    <input name="deacon" value="john" />
+                </form>
+            '''
+        ),
+    ]
+)
+
+mock_forms_post = mock_responses(
     [
         ArgCatcher(
             responses.GET, 'http://robobrowser.com/get/',
@@ -71,6 +87,7 @@ mock_urls = mock_responses(
     ]
 )
 
+
 class TestHeaders(unittest.TestCase):
 
     def test_headers(self):
@@ -94,6 +111,7 @@ class TestHeaders(unittest.TestCase):
     def test_default_headers(self):
         browser = RoboBrowser()
         assert_equal(browser.session.headers, requests.Session().headers)
+
 
 class TestLinks(unittest.TestCase):
 
@@ -138,31 +156,49 @@ class TestLinks(unittest.TestCase):
         self.browser.follow_link(class_=re.compile(r'song'))
         assert_equal(self.browser.url, 'http://robobrowser.com/link2/')
 
+
 class TestForms(unittest.TestCase):
 
-    @mock_forms
     def setUp(self):
         self.browser = RoboBrowser()
-        self.browser.open('http://robobrowser.com/get/')
 
-    @mock_forms
+    @mock_forms_get
     def test_get_forms(self):
+        self.browser.open('http://robobrowser.com/get/')
         forms = self.browser.get_forms()
         assert_equal(len(forms), 2)
 
-    @mock_forms
+    @mock_forms_get
     def test_get_form_by_id(self):
+        self.browser.open('http://robobrowser.com/get/')
         form = self.browser.get_form('bass')
         assert_equal(form.parsed.get('id'), 'bass')
 
-    @mock_forms
-    def test_submit_form(self):
+    @mock_forms_get
+    def test_submit_form_get(self):
+        self.browser.open('http://robobrowser.com/get/')
         form = self.browser.get_form()
         self.browser.submit_form(form)
         assert_equal(
             self.browser.url,
-            'http://robobrowser.com/post/?deacon=john'
+            'http://robobrowser.com/get/?deacon=john'
         )
+        assert_true(self.browser.state.response.request.body is None)
+
+    @mock_forms_post
+    def test_submit_form_post(self):
+        self.browser.open('http://robobrowser.com/get/')
+        form = self.browser.get_form()
+        self.browser.submit_form(form)
+        assert_equal(
+            self.browser.url,
+            'http://robobrowser.com/post/'
+        )
+        assert_equal(
+            self.browser.state.response.request.body,
+            'deacon=john'
+        )
+
 
 class TestHistoryInternals(unittest.TestCase):
 
@@ -177,7 +213,7 @@ class TestHistoryInternals(unittest.TestCase):
         assert_equal(len(self.browser._states), 1)
         assert_equal(self.browser._cursor, 0)
 
-    @mock_forms
+    @mock_forms_post
     def test_submit_appends_to_history(self):
         self.browser.open('http://robobrowser.com/get/')
         form = self.browser.get_form()
