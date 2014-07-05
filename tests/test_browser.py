@@ -43,31 +43,26 @@ mock_links = mock_responses(
     ]
 )
 
-mock_forms_get = mock_responses(
+mock_forms = mock_responses(
     [
         ArgCatcher(
-            responses.GET, 'http://robobrowser.com/get/',
+            responses.GET, 'http://robobrowser.com/get_form/',
             body=b'''
-                <form id="bass" method="get" action="/get/">'
+                <form id="bass" method="get" action="/get_form/">'
                     <input name="deacon" value="john" />
                 </form>
-                <form id="drums" method="post" action="/get/">'
+                <form id="drums" method="post" action="/get_form/">'
                     <input name="deacon" value="john" />
                 </form>
             '''
         ),
-    ]
-)
-
-mock_forms_post = mock_responses(
-    [
         ArgCatcher(
-            responses.GET, 'http://robobrowser.com/get/',
+            responses.GET, 'http://robobrowser.com/post_form/',
             body=b'''
-                <form id="bass" method="post" action="/post/">'
+                <form id="bass" method="post" action="/submit/">'
                     <input name="deacon" value="john" />
                 </form>
-                <form id="drums" method="post" action="/post/">'
+                <form id="drums" method="post" action="/submit/">'
                     <input name="deacon" value="john" />
                 </form>
             '''
@@ -85,7 +80,7 @@ mock_forms_post = mock_responses(
             '''
         ),
         ArgCatcher(
-            responses.POST, 'http://robobrowser.com/post/',
+            responses.POST, 'http://robobrowser.com/submit/',
         ),
     ]
 )
@@ -174,37 +169,37 @@ class TestForms(unittest.TestCase):
     def setUp(self):
         self.browser = RoboBrowser()
 
-    @mock_forms_get
+    @mock_forms
     def test_get_forms(self):
-        self.browser.open('http://robobrowser.com/get/')
+        self.browser.open('http://robobrowser.com/get_form/')
         forms = self.browser.get_forms()
         assert_equal(len(forms), 2)
 
-    @mock_forms_get
+    @mock_forms
     def test_get_form_by_id(self):
-        self.browser.open('http://robobrowser.com/get/')
+        self.browser.open('http://robobrowser.com/get_form/')
         form = self.browser.get_form('bass')
         assert_equal(form.parsed.get('id'), 'bass')
 
-    @mock_forms_get
+    @mock_forms
     def test_submit_form_get(self):
-        self.browser.open('http://robobrowser.com/get/')
+        self.browser.open('http://robobrowser.com/get_form/')
         form = self.browser.get_form()
         self.browser.submit_form(form)
         assert_equal(
             self.browser.url,
-            'http://robobrowser.com/get/?deacon=john'
+            'http://robobrowser.com/get_form/?deacon=john'
         )
         assert_true(self.browser.state.response.request.body is None)
 
-    @mock_forms_post
+    @mock_forms
     def test_submit_form_post(self):
-        self.browser.open('http://robobrowser.com/get/')
+        self.browser.open('http://robobrowser.com/post_form/')
         form = self.browser.get_form()
         self.browser.submit_form(form)
         assert_equal(
             self.browser.url,
-            'http://robobrowser.com/post/'
+            'http://robobrowser.com/submit/'
         )
         assert_equal(
             self.browser.state.response.request.body,
@@ -224,6 +219,7 @@ class TestFormsInputNoName(unittest.TestCase):
         forms = self.browser.get_forms()
         assert_equal(len(forms), 1)
 
+
 class TestHistoryInternals(unittest.TestCase):
 
     def setUp(self):
@@ -237,9 +233,9 @@ class TestHistoryInternals(unittest.TestCase):
         assert_equal(len(self.browser._states), 1)
         assert_equal(self.browser._cursor, 0)
 
-    @mock_forms_post
+    @mock_forms
     def test_submit_appends_to_history(self):
-        self.browser.open('http://robobrowser.com/get/')
+        self.browser.open('http://robobrowser.com/get_form/')
         form = self.browser.get_form()
         self.browser.submit_form(form)
 
@@ -271,6 +267,7 @@ class TestHistoryInternals(unittest.TestCase):
             browser.open('http://robobrowser.com/page1/')
             assert_equal(len(browser._states), 1)
             assert_equal(browser._cursor, 0)
+
 
 class TestHistory(unittest.TestCase):
 
