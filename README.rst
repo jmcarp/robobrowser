@@ -96,15 +96,29 @@ RoboBrowser also includes tools for working with forms, inspired by
     signup_form['user[name]'].value = 'python-robot'
     signup_form['user[user_password]'].value = 'secret'
 
-    # Serialize it to JSON
-    signup_form.serialize()         # {'data': {'authenticity_token': '6d03597...',
-                                    #  'context': '',
-                                    #  'user[email]': '',
-                                    #  'user[name]': 'python-robot',
-                                    #  'user[user_password]': ''}}   
-
-    # And submit
+    # Submit the form
     browser.submit_form(signup_form)
+
+Uploading files:
+
+.. code-block:: python
+    
+    from robobrowser import RoboBrowser
+
+    # Browse to a page with an upload form
+    browser = RoboBrowser()
+    browser.open('http://cgi-lib.berkeley.edu/ex/fup.html')
+
+    # Find the form
+    upload_form = browser.get_form()
+    upload_form                     # <RoboForm upfile=, note=>
+
+    # Choose a file to upload
+    upload_form['upfile']           # <robobrowser.forms.fields.FileInput...>
+    upload_form['upfile'].value = open('path/to/file.txt', 'r')
+
+    # Submit
+    browser.submit(upload_form)
 
 Requirements
 ------------
