@@ -99,6 +99,36 @@ RoboBrowser also includes tools for working with forms, inspired by
     # Submit the form
     browser.submit_form(signup_form)
 
+Checkboxes:
+
+.. code-block:: python
+    
+    from robobrowser import RoboBrowser
+    
+    # Browse to a page with checkbox inputs
+    browser = RoboBrowser()
+    browser.open('http://www.w3schools.com/html/html_forms.asp')
+
+    # Find the form
+    form = browser.get_forms()[3]
+    form                            # <RoboForm vehicle=[]>
+    form['vehicle']                 # <robobrowser.forms.fields.Checkbox...>
+    
+    # Checked values can be get and set like lists
+    form['vehicle'].options         # [u'Bike', u'Car']
+    form['vehicle'].value           # []
+    form['vehicle'].value = ['Bike']
+    form['vehicle'].value = ['Bike', 'Car']
+    
+    # Values can also be set using input labels
+    form['vehicle'].labels          # [u'I have a bike', u'I have a car \r\n']
+    form['vehicle'].value = ['I have a bike']
+    form['vehicle'].value           # [u'Bike']
+
+    # Only values that correspond to checkbox values or labels can be set; 
+    # this will raise a `ValueError`
+    form['vehicle'].value = ['Hot Dogs']
+
 Uploading files:
 
 .. code-block:: python
