@@ -58,13 +58,14 @@ def find(soup, name=None, attrs=None, recursive=True, text=None, **kwargs):
 
 
 def ensure_soup(value):
-    """Coerce a value (or list of values) to BeautifulSoup (or list of
-    BeautifulSoups).
+    """Coerce a value (or list of values) to Tag (or list of Tag).
 
     :param value: String, BeautifulSoup, Tag, or list of the above
-    :return: BeautifulSoup or list of BeautifulSoups
+    :return: Tag or list of Tags
 
     """
+    if isinstance(value, BeautifulSoup):
+        return value.find()
     if isinstance(value, Tag):
         return value
     if isinstance(value, list):
@@ -72,7 +73,8 @@ def ensure_soup(value):
             ensure_soup(item)
             for item in value
         ]
-    return BeautifulSoup(value)
+    parsed = BeautifulSoup(value)
+    return parsed.find()
 
 
 def lowercase_attr_names(tag):

@@ -39,7 +39,7 @@ class BaseField(with_metaclass(FieldMeta)):
     def __init__(self, parsed):
         self._parsed = helpers.ensure_soup(parsed)
         self._value = None
-        self.name = self._get_name(parsed)
+        self.name = self._get_name(self._parsed)
 
     def _get_name(self, parsed):
         return parsed.get('name')
