@@ -2,6 +2,7 @@
 
 coverage
 coveralls
+mock
 nose
 sphinx
 tox
