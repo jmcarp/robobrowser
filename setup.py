@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import os
+import re
 import sys
-
 
 from setuptools import setup, find_packages
 from pip.req import parse_requirements
@@ -11,6 +11,25 @@ from pip.req import parse_requirements
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
     sys.exit()
+
+def find_version(fname):
+    """Attempts to find the version number in the file names fname.
+    Raises RuntimeError if not found.
+
+    """
+    version = ''
+    with open(fname, 'r') as fp:
+        reg = re.compile(r'__version__ = [\'"]([^\'"]*)[\'"]')
+        for line in fp:
+            m = reg.match(line)
+            if m:
+                version = m.group(1)
+                break
+    if not version:
+        raise RuntimeError('Cannot find version information')
+    return version
+
+__version__ = find_version('robobrowser/__init__.py')
 
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
@@ -21,7 +40,7 @@ requirements = [
 
 setup(
     name='robobrowser',
-    version='0.3.1',
+    version=__version__,
     description='Your friendly neighborhood web scraper',
     author='Joshua Carp',
     author_email='jm.carp@gmail.com',
