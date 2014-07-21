@@ -41,8 +41,8 @@ def _parse_fields(parsed):
     :return OrderedDict: Collection of field objects
 
     """
-    # Note: Call this `rv` to avoid name conflict with `fields` module
-    rv = OrderedDict()
+    # Note: Call this `out` to avoid name conflict with `fields` module
+    out = OrderedDict()
 
     # Prepare field tags
     tags = parsed.find_all(_tag_ptn)
@@ -85,9 +85,9 @@ def _parse_fields(parsed):
 
         # Add field
         if field is not None:
-            rv[name] = field
+            out[name] = field
 
-    return rv
+    return out
 
 
 class FormData(object):
