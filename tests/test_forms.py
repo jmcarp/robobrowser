@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 
 from robobrowser.compat import builtin_name
 from robobrowser.forms.form import Form, FormData, fields, _parse_fields
+from robobrowser import exceptions
 
 
 class TestFormData(unittest.TestCase):
@@ -63,6 +64,15 @@ class TestForm(unittest.TestCase):
         assert_equal(set(self.form.fields.keys()), keys)
         assert_equal(set(self.form.keys()), keys)
 
+    def test_add_field(self):
+        html = '<input name="instrument" />'
+        field = fields.Input(html)
+        self.form.add_field(field)
+        assert_true('instrument' in self.form.fields)
+
+    def test_add_field_wrong_type(self):
+        assert_raises(ValueError, lambda: self.form.add_field('freddie'))
+
     def test_repr(self):
         assert_equal(
             repr(self.form),
@@ -96,19 +106,19 @@ class TestParser(unittest.TestCase):
         html = '<input name="band" value="queen" />'
         _fields = _parse_fields(BeautifulSoup(html))
         assert_equal(len(_fields), 1)
-        assert_true(isinstance(_fields['band'], fields.Input))
+        assert_true(isinstance(_fields[0], fields.Input))
 
     def test_parse_file_input(self):
         html = '<input name="band" type="file" />'
         _fields = _parse_fields(BeautifulSoup(html))
         assert_equal(len(_fields), 1)
-        assert_true(isinstance(_fields['band'], fields.FileInput))
+        assert_true(isinstance(_fields[0], fields.FileInput))
 
     def test_parse_textarea(self):
         html = '<textarea name="band">queen</textarea>'
         _fields = _parse_fields(BeautifulSoup(html))
         assert_equal(len(_fields), 1)
-        assert_true(isinstance(_fields['band'], fields.Textarea))
+        assert_true(isinstance(_fields[0], fields.Textarea))
 
     def test_parse_radio(self):
         html = '''
@@ -121,13 +131,13 @@ class TestParser(unittest.TestCase):
         '''
         _fields = _parse_fields(BeautifulSoup(html))
         assert_equal(len(_fields), 2)
-        assert_true(isinstance(_fields['favorite_member'], fields.Radio))
-        assert_true(isinstance(_fields['favorite_song'], fields.Radio))
+        assert_true(isinstance(_fields[0], fields.Radio))
+        assert_true(isinstance(_fields[0], fields.Radio))
         assert_equal(
-            len(_fields['favorite_member']._parsed), 4
+            len(_fields[0]._parsed), 4
         )
         assert_equal(
-            len(_fields['favorite_song']._parsed), 2
+            len(_fields[1]._parsed), 2
         )
 
     def test_parse_checkbox(self):
@@ -141,14 +151,10 @@ class TestParser(unittest.TestCase):
         '''
         _fields = _parse_fields(BeautifulSoup(html))
         assert_equal(len(_fields), 2)
-        assert_true(isinstance(_fields['favorite_member'], fields.Checkbox))
-        assert_true(isinstance(_fields['favorite_song'], fields.Checkbox))
-        assert_equal(
-            len(_fields['favorite_member']._parsed), 4
-        )
-        assert_equal(
-            len(_fields['favorite_song']._parsed), 2
-        )
+        assert_true(isinstance(_fields[0], fields.Checkbox))
+        assert_true(isinstance(_fields[1], fields.Checkbox))
+        assert_equal(len(_fields[0]._parsed), 4)
+        assert_equal(len(_fields[1]._parsed), 2)
 
     def test_parse_select(self):
         html = '''
@@ -161,7 +167,7 @@ class TestParser(unittest.TestCase):
         '''
         _fields = _parse_fields(BeautifulSoup(html))
         assert_equal(len(_fields), 1)
-        assert_true(isinstance(_fields['instrument'], fields.Select))
+        assert_true(isinstance(_fields[0], fields.Select))
 
     def test_parse_select_multi(self):
         html = '''
@@ -174,7 +180,7 @@ class TestParser(unittest.TestCase):
         '''
         _fields = _parse_fields(BeautifulSoup(html))
         assert_equal(len(_fields), 1)
-        assert_true(isinstance(_fields['instrument'], fields.MultiSelect))
+        assert_true(isinstance(_fields[0], fields.MultiSelect))
 
 
 class TestInput(unittest.TestCase):
@@ -200,6 +206,10 @@ class TestInput(unittest.TestCase):
             self.input.serialize(),
             {'brian': 'may'}
         )
+
+    def test_invalid_name(self):
+        html = '<input />'
+        assert_raises(exceptions.InvalidNameError, lambda: fields.Input(html))
 
 
 class TestInputBlank(unittest.TestCase):

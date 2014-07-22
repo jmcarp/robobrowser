@@ -9,6 +9,7 @@ from robobrowser.compat import OrderedDict, iteritems
 
 from . import fields
 from .. import helpers
+from .. import exceptions
 
 
 _tags = ['input', 'textarea', 'select']
@@ -34,6 +35,31 @@ def _group_flat_tags(tag, tags):
     return grouped
 
 
+def _parse_field(tag, tags):
+
+    tag_type = tag.name.lower()
+
+    if tag_type == 'input':
+        tag_type = tag.get('type', '').lower()
+        if tag_type == 'file':
+            return fields.FileInput(tag)
+        elif tag_type == 'radio':
+            radios = _group_flat_tags(tag, tags)
+            return fields.Radio(radios)
+        elif tag_type == 'checkbox':
+            checkboxes = _group_flat_tags(tag, tags)
+            return fields.Checkbox(checkboxes)
+        else:
+            return fields.Input(tag)
+    elif tag_type == 'textarea':
+        return fields.Textarea(tag)
+    elif tag_type == 'select':
+        if tag.get('multiple') is not None:
+            return fields.MultiSelect(tag)
+        else:
+            return fields.Select(tag)
+
+
 def _parse_fields(parsed):
     """Parse form fields from HTML.
 
@@ -42,7 +68,7 @@ def _parse_fields(parsed):
 
     """
     # Note: Call this `out` to avoid name conflict with `fields` module
-    out = OrderedDict()
+    out = []
 
     # Prepare field tags
     tags = parsed.find_all(_tag_ptn)
@@ -50,42 +76,13 @@ def _parse_fields(parsed):
         helpers.lowercase_attr_names(tag)
 
     while tags:
-
         tag = tags.pop(0)
-        tag_type = tag.name.lower()
-
-        # Get name attribute, skipping if undefined
-        name = tag.get('name')
-        if name is None:
+        try:
+            field = _parse_field(tag, tags)
+        except exceptions.InvalidNameError:
             continue
-        name = name.lower()
-
-        field = None
-
-        # Create form field
-        if tag_type == 'input':
-            tag_type = tag.get('type', '').lower()
-            if tag_type == 'file':
-                field = fields.FileInput(tag)
-            elif tag_type == 'radio':
-                radios = _group_flat_tags(tag, tags)
-                field = fields.Radio(radios)
-            elif tag_type == 'checkbox':
-                checkboxes = _group_flat_tags(tag, tags)
-                field = fields.Checkbox(checkboxes)
-            else:
-                field = fields.Input(tag)
-        elif tag_type == 'textarea':
-            field = fields.Textarea(tag)
-        elif tag_type == 'select':
-            if tag.get('multiple') is not None:
-                field = fields.MultiSelect(tag)
-            else:
-                field = fields.Select(tag)
-
-        # Add field
         if field is not None:
-            out[name] = field
+            out.append(field)
 
     return out
 
@@ -115,7 +112,7 @@ class FormData(object):
         """Export to Requests format.
 
         :param str method: Request method
-        :returns: Dict of keyword arguments formatted for `requests.request`
+        :return: Dict of keyword arguments formatted for `requests.request`
 
         """
         out = {}
@@ -135,7 +132,21 @@ class Form(object):
         self.parsed = parsed
         self.action = self.parsed.get('action')
         self.method = self.parsed.get('method', 'get')
-        self.fields = _parse_fields(self.parsed)
+        self.fields = OrderedDict()
+        for field in _parse_fields(self.parsed):
+            self.add_field(field)
+
+    def add_field(self, field):
+        """Add a field.
+
+        :param field: Field to add
+        :raise: ValueError if `field` is not an instance of `BaseField`.
+
+        """
+        if not isinstance(field, fields.BaseField):
+            raise ValueError('Argument "field" must be an instance of '
+                             'BaseField')
+        self.fields[field.name] = field
 
     def __repr__(self):
         state = ', '.join(
@@ -160,7 +171,7 @@ class Form(object):
     def serialize(self):
         """Serialize each form field to a FormData container.
 
-        :returns: FormData instance
+        :return: FormData instance
 
         """
         form_data = FormData()

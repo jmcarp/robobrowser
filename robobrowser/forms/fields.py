@@ -5,7 +5,8 @@ HTML form fields.
 import abc
 
 from robobrowser.compat import with_metaclass, string_types
-from .. import helpers
+from robobrowser import helpers
+from robobrowser import exceptions
 
 
 class ValueMeta(type):
@@ -30,6 +31,7 @@ class FieldMeta(ValueMeta, abc.ABCMeta):
     """
     pass
 
+
 class BaseField(with_metaclass(FieldMeta)):
     """Abstract base class for form fields.
 
@@ -42,7 +44,10 @@ class BaseField(with_metaclass(FieldMeta)):
         self.name = self._get_name(self._parsed)
 
     def _get_name(self, parsed):
-        return parsed.get('name')
+        name = parsed.get('name')
+        if name is not None:
+            return name
+        raise exceptions.InvalidNameError
 
     # Different form fields may serialize their values under different keys.
     # See `FormData` for details.
@@ -157,7 +162,10 @@ class MultiValueField(MultiOptionField):
 class FlatOptionField(MultiOptionField):
 
     def _get_name(self, parsed):
-        return parsed[0].get('name')
+        name = parsed[0].get('name')
+        if name is not None:
+            return name
+        raise exceptions.InvalidNameError
 
     def _get_options(self, parsed):
         options, labels, initial = [], [], []
