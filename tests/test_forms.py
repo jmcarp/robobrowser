@@ -6,40 +6,40 @@ import tempfile
 from bs4 import BeautifulSoup
 
 from robobrowser.compat import builtin_name
-from robobrowser.forms.form import Form, FormData, fields, _parse_fields
+from robobrowser.forms.form import Form, Payload, fields, _parse_fields
 from robobrowser import exceptions
 
 
-class TestFormData(unittest.TestCase):
+class TestPayload(unittest.TestCase):
 
     def setUp(self):
-        self.form_data = FormData()
-        self.form_data.add({'red': 'special'})
+        self.payload = Payload()
+        self.payload.add({'red': 'special'})
 
     def test_add_payload(self):
-        self.form_data.add({'lazing': 'sunday'})
-        assert_true('lazing' in self.form_data.payload)
-        assert_equal(self.form_data.payload['lazing'], 'sunday')
+        self.payload.add({'lazing': 'sunday'})
+        assert_true('lazing' in self.payload.data)
+        assert_equal(self.payload.data['lazing'], 'sunday')
 
     def test_add_by_key(self):
-        self.form_data.add({'lazing': 'sunday'}, 'afternoon')
-        assert_false('lazing' in self.form_data.payload)
-        assert_true('afternoon' in self.form_data.options)
-        assert_true('lazing' in self.form_data.options['afternoon'])
+        self.payload.add({'lazing': 'sunday'}, 'afternoon')
+        assert_false('lazing' in self.payload.data)
+        assert_true('afternoon' in self.payload.options)
+        assert_true('lazing' in self.payload.options['afternoon'])
         assert_equal(
-            self.form_data.options['afternoon']['lazing'],
+            self.payload.options['afternoon']['lazing'],
             'sunday'
         )
 
     def test_requests_get(self):
-        out = self.form_data.to_requests('get')
+        out = self.payload.to_requests('get')
         assert_true('params' in out)
-        assert_equal(out['params'], {'red': 'special'})
+        assert_equal(list(out['params']), [('red', 'special')])
 
     def test_requests_post(self):
-        out = self.form_data.to_requests('post')
+        out = self.payload.to_requests('post')
         assert_true('data' in out)
-        assert_equal(out['data'], {'red': 'special'})
+        assert_equal(list(out['data']), [('red', 'special')])
 
 
 class TestForm(unittest.TestCase):
@@ -55,12 +55,15 @@ class TestForm(unittest.TestCase):
                 </select>
                 <input type="radio" name="bass" value="Roger">Roger<br />
                 <input type="radio" name="bass" value="John">John<br />
+                <input name="multi" value="multi1" />
+                <input name="multi" value="multi2" />
+                <input type="submit" name="submit" value="submit" />
             </form>
         '''
         self.form = Form(self.html)
 
     def test_fields(self):
-        keys = set(('vocals', 'guitar', 'drums', 'bass'))
+        keys = set(('vocals', 'guitar', 'drums', 'bass', 'multi', 'submit'))
         assert_equal(set(self.form.fields.keys()), keys)
         assert_equal(set(self.form.keys()), keys)
 
@@ -76,7 +79,8 @@ class TestForm(unittest.TestCase):
     def test_repr(self):
         assert_equal(
             repr(self.form),
-            '<RoboForm vocals=, guitar=, drums=roger, bass=>'
+            '<RoboForm vocals=, guitar=, drums=roger, bass=, '
+                'multi=multi1, multi=multi2, submit=submit>'
         )
 
     def test_repr_empty(self):
@@ -84,6 +88,42 @@ class TestForm(unittest.TestCase):
             repr(Form('<form></form>')),
             '<RoboForm>'
         )
+
+    def test_serialize(self):
+        serialized = self.form.serialize()
+        assert_equal(serialized.data.getlist('multi'), ['multi1', 'multi2'])
+        assert_equal(serialized.data['submit'], 'submit')
+
+
+class TestFormMultiSubmit(unittest.TestCase):
+
+    def setUp(self):
+        self.html = '''
+            <form>
+                <input type="submit" name="submit1" value="value1" />
+                <input type="submit" name="submit2" value="value2" />
+            </form>
+        '''
+        self.form = Form(self.html)
+
+    def test_serialize_multi_no_submit_specified(self):
+        assert_raises(
+            exceptions.InvalidSubmitError,
+            lambda: self.form.serialize()
+        )
+
+    def test_serialize_multi_wrong_submit_specified(self):
+        fake_submit = fields.Submit('<input type="submit" name="fake" />')
+        assert_raises(
+            exceptions.InvalidSubmitError,
+            lambda: self.form.serialize(submit=fake_submit)
+        )
+
+    def test_serialize_multi(self):
+        submit = self.form.submit_fields['submit1']
+        serialized = self.form.serialize(submit)
+        assert_equal(serialized.data['submit1'], 'value1')
+        assert_false('submit2' in serialized.data)
 
 
 class TestParser(unittest.TestCase):
@@ -543,3 +583,38 @@ class TestFileInput(unittest.TestCase):
             self.input.serialize(),
             {'song': file}
         )
+
+
+class TestDefaultValues(unittest.TestCase):
+
+    def test_checkbox_default(self):
+        inputs = BeautifulSoup('''
+            <input type="checkbox" name="checkbox" />
+        ''').find_all('input')
+        checkbox = fields.Checkbox(inputs)
+        assert_equal(checkbox.options, ['on'])
+
+    def test_radio_default(self):
+        inputs = BeautifulSoup('''
+            <input type="radio" name="checkbox" />
+        ''').find_all('input')
+        radio = fields.Radio(inputs)
+        assert_equal(radio.options, ['on'])
+
+    def test_select_default(self):
+        parsed = BeautifulSoup('''
+            <select name="select">
+                <option>opt</option>
+            </select>
+        ''')
+        select = fields.Select(parsed)
+        assert_equal(select.options, ['sel'])
+
+    def test_multi_select_default(self):
+        parsed = BeautifulSoup('''
+            <select name="select" multiple>
+                <option>opt</option>
+            </select>
+        ''')
+        select = fields.Select(parsed)
+        assert_equal(select.options, ['sel'])

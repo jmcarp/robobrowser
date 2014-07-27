@@ -7,6 +7,7 @@ from robobrowser.browser import RoboBrowser
 from robobrowser.cache import RoboCache
 from tests.utils import KwargSetter
 
+
 class TestAdapter(unittest.TestCase):
 
     def test_cache_on(self):
@@ -24,6 +25,7 @@ class TestAdapter(unittest.TestCase):
         self.browser.open('http://httpbin.org/')
         resp2 = self.browser.state.response
         assert_true(resp1 is not resp2)
+
 
 class TestCache(unittest.TestCase):
 

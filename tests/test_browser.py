@@ -4,99 +4,16 @@ from nose.tools import *
 
 import re
 import requests
-import functools
 
-from robobrowser import responses
 from robobrowser.browser import RoboBrowser
-from robobrowser.browser import RoboError
-from tests.utils import ArgCatcher
+from robobrowser import exceptions
 
-
-def mock_responses(resps):
-    """Decorator factory to make tests more DRY. Bundles responses.activate
-    with a collection of response rules.
-
-    :param list resps: List of response-formatted ArgCatcher arguments.
-
-    """
-    def wrapper(func):
-        @responses.activate
-        @functools.wraps(func)
-        def wrapped(*args, **kwargs):
-            for resp in resps:
-                responses.add(*resp.args, **resp.kwargs)
-            return func(*args, **kwargs)
-        return wrapped
-    return wrapper
-
-mock_links = mock_responses(
-    [
-        ArgCatcher(
-            responses.GET, 'http://robobrowser.com/links/',
-            body=b'''
-                <a href="/link1/">sheer heart attack</a>
-                <a href="/link2/" class="song">night at the opera</a>
-            '''
-        ),
-        ArgCatcher(responses.GET, 'http://robobrowser.com/link1/'),
-        ArgCatcher(responses.GET, 'http://robobrowser.com/link2/'),
-    ]
-)
-
-mock_forms = mock_responses(
-    [
-        ArgCatcher(
-            responses.GET, 'http://robobrowser.com/get_form/',
-            body=b'''
-                <form id="bass" method="get" action="/get_form/">'
-                    <input name="deacon" value="john" />
-                </form>
-                <form id="drums" method="post" action="/get_form/">'
-                    <input name="deacon" value="john" />
-                </form>
-            '''
-        ),
-        ArgCatcher(
-            responses.GET, 'http://robobrowser.com/post_form/',
-            body=b'''
-                <form id="bass" method="post" action="/submit/">'
-                    <input name="deacon" value="john" />
-                </form>
-                <form id="drums" method="post" action="/submit/">'
-                    <input name="deacon" value="john" />
-                </form>
-            '''
-        ),
-        ArgCatcher(
-            responses.GET, 'http://robobrowser.com/noname/',
-            body=b'''
-                <form name="input" action="action" method="get">
-                <input type="checkbox" name="vehicle" value="Bike">
-                    I have a bike<br>
-                <input type="checkbox" name="vehicle" value="Car">I have a car
-                <br><br>
-                <input type="submit" value="Submit">
-                </form>
-            '''
-        ),
-        ArgCatcher(
-            responses.POST, 'http://robobrowser.com/submit/',
-        ),
-    ]
-)
-
-mock_urls = mock_responses(
-    [
-        ArgCatcher(responses.GET, 'http://robobrowser.com/page1/'),
-        ArgCatcher(responses.GET, 'http://robobrowser.com/page2/'),
-        ArgCatcher(responses.GET, 'http://robobrowser.com/page3/'),
-        ArgCatcher(responses.GET, 'http://robobrowser.com/page4/'),
-    ]
-)
+from tests.fixtures import mock_links, mock_urls, mock_forms
 
 
 class TestHeaders(unittest.TestCase):
 
+    @mock_links
     def test_headers(self):
         headers = {
             'X-Song': 'Innuendo',
@@ -107,6 +24,7 @@ class TestHeaders(unittest.TestCase):
         for key, value in headers.items():
             assert_equal(browser.session.headers[key], value)
 
+    @mock_links
     def test_user_agent(self):
         browser = RoboBrowser(user_agent='freddie')
         browser.open('http://robobrowser.com/links/')
@@ -135,7 +53,7 @@ class TestLinks(unittest.TestCase):
     @mock_links
     def test_get_links(self):
         links = self.browser.get_links()
-        assert_equal(len(links), 2)
+        assert_equal(len(links), 3)
 
     @mock_links
     def test_get_link_by_text(self):
@@ -162,6 +80,13 @@ class TestLinks(unittest.TestCase):
     def test_follow_link_bs_args(self):
         self.browser.follow_link(class_=re.compile(r'song'))
         assert_equal(self.browser.url, 'http://robobrowser.com/link2/')
+
+    @mock_links
+    def test_follow_link_no_href(self):
+        assert_raises(
+            exceptions.RoboError,
+            lambda: self.browser.follow_link(class_=re.compile(r'nohref'))
+        )
 
 
 class TestForms(unittest.TestCase):
@@ -191,6 +116,18 @@ class TestForms(unittest.TestCase):
             'http://robobrowser.com/get_form/?deacon=john'
         )
         assert_true(self.browser.state.response.request.body is None)
+
+    @mock_forms
+    def test_submit_form_multi_submit(self):
+        self.browser.open('http://robobrowser.com/multi_submit_form/')
+        form = self.browser.get_form()
+        submit = form.submit_fields['submit2']
+        self.browser.submit_form(form, submit=submit)
+        assert_equal(
+            self.browser.url,
+            'http://robobrowser.com/multi_submit_form/'
+            '?deacon=john&submit2=value2'
+        )
 
     @mock_forms
     def test_submit_form_post(self):
@@ -317,13 +254,13 @@ class TestHistory(unittest.TestCase):
             len(self.browser._states) - 1
         )
         assert_raises(
-            RoboError,
+            exceptions.RoboError,
             self.browser.forward
         )
 
     def test_back_error(self):
         assert_raises(
-            RoboError,
+            exceptions.RoboError,
             self.browser.back,
             5
         )

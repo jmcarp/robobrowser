@@ -8,14 +8,13 @@ from bs4 import BeautifulSoup
 from bs4.element import Tag
 from requests.exceptions import RequestException
 
-from robobrowser.compat import urlparse, string_types
 from robobrowser import helpers
+from robobrowser import exceptions
+from robobrowser.compat import urlparse, string_types
 from robobrowser.forms.form import Form
 from robobrowser.cache import RoboHTTPAdapter
 from robobrowser.helpers import retry
 
-
-class RoboError(Exception): pass
 
 _link_ptn = re.compile(r'^(a|button)$', re.I)
 _form_ptn = re.compile(r'^form$', re.I)
@@ -126,17 +125,17 @@ class RoboBrowser(object):
     def __repr__(self):
         try:
             return '<RoboBrowser url={0}>'.format(self.url)
-        except RoboError:
+        except exceptions.RoboError:
             return '<RoboBrowser>'
 
     @property
     def state(self):
         if self._cursor == -1:
-            raise RoboError('No state')
+            raise exceptions.RoboError('No state')
         try:
             return self._states[self._cursor]
         except IndexError:
-            raise RoboError('Index out of range')
+            raise exceptions.RoboError('Index out of range')
 
     @property
     def response(self):
@@ -156,7 +155,7 @@ class RoboBrowser(object):
         try:
             return self.parsed.find
         except AttributeError:
-            raise RoboError
+            raise exceptions.RoboError
 
     @property
     def find_all(self):
@@ -164,7 +163,7 @@ class RoboBrowser(object):
         try:
             return self.parsed.find_all
         except AttributeError:
-            raise RoboError
+            raise exceptions.RoboError
 
     @property
     def select(self):
@@ -172,7 +171,7 @@ class RoboBrowser(object):
         try:
             return self.parsed.select
         except AttributeError:
-            raise RoboError
+            raise exceptions.RoboError
 
     def _build_url(self, url):
         """Build absolute URL.
@@ -231,10 +230,10 @@ class RoboBrowser(object):
 
         """
         if not self.history:
-            raise RoboError('Not tracking history')
+            raise exceptions.RoboError('Not tracking history')
         cursor = self._cursor + n
         if cursor >= len(self._states) or cursor < 0:
-            raise RoboError('Index out of range')
+            raise exceptions.RoboError('Index out of range')
         self._cursor = cursor
 
     def back(self, n=1):
@@ -319,16 +318,18 @@ class RoboBrowser(object):
         else:
             link = self.get_link(*args, **kwargs)
         if link is None:
-            raise RoboError('No results found')
+            raise exceptions.RoboError('No results found')
         href = link.get('href')
         if href is None:
-            raise RoboError('Link element must have href attribute')
+            raise exceptions.RoboError('Link element must have href attribute')
         self.open(self._build_url(href))
 
-    def submit_form(self, form):
+    def submit_form(self, form, submit=None):
         """Submit a form.
 
         :param Form form: Filled-out form object
+        :param Submit submit: Optional `Submit` to click, if form includes
+            multiple submits
 
         """
         # Get HTTP verb
@@ -336,8 +337,8 @@ class RoboBrowser(object):
 
         # Send request
         url = self._build_url(form.action) or self.url
-        form_data = form.serialize()
-        response = self.session.request(method, url, **form_data.to_requests(method))
+        payload = form.serialize(submit=submit)
+        response = self.session.request(method, url, **payload.to_requests(method))
 
         # Update history
         self._update_state(response)

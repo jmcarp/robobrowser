@@ -3,8 +3,9 @@ HTML form fields.
 """
 
 import abc
+import six
 
-from robobrowser.compat import with_metaclass, string_types
+from robobrowser.compat import string_types
 from robobrowser import helpers
 from robobrowser import exceptions
 
@@ -32,7 +33,8 @@ class FieldMeta(ValueMeta, abc.ABCMeta):
     pass
 
 
-class BaseField(with_metaclass(FieldMeta)):
+@six.add_metaclass(FieldMeta)
+class BaseField(object):
     """Abstract base class for form fields.
 
     :param parsed: String or BeautifulSoup tag
@@ -51,7 +53,7 @@ class BaseField(with_metaclass(FieldMeta)):
 
     # Different form fields may serialize their values under different keys.
     # See `FormData` for details.
-    form_data_key = None
+    payload_key = None
 
     def serialize(self):
         return {self.name: self.value}
@@ -71,6 +73,10 @@ class Input(BaseField):
         self.value = self._parsed.get('value')
 
 
+class Submit(Input):
+    pass
+
+
 class FileInput(BaseField):
 
     def _set_value(self, value):
@@ -83,13 +89,18 @@ class FileInput(BaseField):
 
     # Serialize value to 'files' key for compatibility with file attachments
     # in requests.
-    form_data_key = 'files'
-
-    def serialize(self):
-        return {self.name: self.value}
+    payload_key = 'files'
 
 
 class MultiOptionField(BaseField):
+
+    @abc.abstractproperty
+    def default_value(self):
+        """When the "value" attribute is not defined for a multi-option form
+        field, some default must be used instead.
+
+        """
+        return None
 
     def __init__(self, parsed):
         super(MultiOptionField, self).__init__(parsed)
@@ -170,7 +181,7 @@ class FlatOptionField(MultiOptionField):
     def _get_options(self, parsed):
         options, labels, initial = [], [], []
         for option in parsed:
-            value = option.get('value')
+            value = option.get('value', self.default_value)
             checked = option.get('checked')
             options.append(value)
             labels.append(
@@ -188,7 +199,7 @@ class NestedOptionField(MultiOptionField):
     def _get_options(self, parsed):
         options, labels, initial = [], [], []
         for option in parsed.find_all('option'):
-            value = option.get('value')
+            value = option.get('value', self.default_value)
             selected = option.get('selected')
             options.append(value)
             labels.append(option.text)
@@ -205,14 +216,25 @@ class Textarea(Input):
 
 
 class Checkbox(FlatOptionField, MultiValueField):
-    pass
+
+    @property
+    def default_value(self):
+        return 'on'
 
 
 class Radio(FlatOptionField, MultiOptionField):
-    pass
+
+    @property
+    def default_value(self):
+        return 'on'
 
 
 class Select(NestedOptionField, MultiOptionField):
+
+    @property
+    def default_value(self):
+        return 'sel'
+
     def _set_initial(self, initial):
         """If no option is selected initially, select the first option.
 
@@ -223,4 +245,7 @@ class Select(NestedOptionField, MultiOptionField):
 
 
 class MultiSelect(NestedOptionField, MultiValueField):
-    pass
+
+    @property
+    def default_value(self):
+        return 'sel'

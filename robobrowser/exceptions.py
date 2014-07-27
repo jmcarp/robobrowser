@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 
 
-class InvalidNameError(Exception):
+class RoboError(Exception):
+    pass
+
+
+class InvalidNameError(RoboError):
+    pass
+
+
+class InvalidSubmitError(RoboError):
     pass

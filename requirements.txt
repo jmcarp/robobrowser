@@ -1,3 +1,4 @@
-beautifulsoup4
-requests
-six
+beautifulsoup4==4.3.2
+requests==2.3.0
+six==1.7.3
+werkzeug==0.9.6
