@@ -3,6 +3,18 @@
 History
 -------
 
+0.5.0
+++++++++++++++++++
+* Add optional `session` argument to `RoboBrowser::__init__`
+* Add optional `timeout` and `allow_redirects` options to `RoboBrowser::__init__`
+* Allow `RoboBrowser::open`, `RoboBrowser::follow_link`, and `RoboBrowser::submit_form` to accept optional keyword arguments to requests (`timeout`, `verify`, etc.)
+* *Backwards-incompatible*: Remove `auth`, `headers`,  and `verify` arguments `from RoboBrowser::__init__`; session configuration should instead be passed in `session`
+* *Backwards-incompatible*: Restrict `RoboBrowser::follow_link` to `link` argument; text strings and BeautifulSoup arguments no longer accepted
+
+0.4.1
+++++++++++++++++++
+* Handle multi-option fields without "value" attributes
+
 0.4.0
 ++++++++++++++++++
 * Fix modeling of form fields to handle non-unique field names.

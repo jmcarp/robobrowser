@@ -10,7 +10,7 @@ from requests.exceptions import RequestException
 
 from robobrowser import helpers
 from robobrowser import exceptions
-from robobrowser.compat import urlparse, string_types
+from robobrowser.compat import urlparse
 from robobrowser.forms.form import Form
 from robobrowser.cache import RoboHTTPAdapter
 from robobrowser.helpers import retry
@@ -50,14 +50,13 @@ class RoboBrowser(object):
     """Robotic web browser. Represents HTTP requests and responses using the
     requests library and parsed HTML using BeautifulSoup.
 
-    :param tuple auth: Tuple of (username, password)
     :param str parser: HTML parser; used by BeautifulSoup
-    :param dict headers: Default headers
     :param str user_agent: Default user-agent
     :param history: History length; infinite if True, 1 if falsy, else
         takes integer value
-    :param int timeout: Default timeout in seconds
-    :param bool verify: Verify SSL
+
+    :param int timeout: Default timeout, in seconds
+    :param bool allow_redirects: Allow redirects on POST/PUT/DELETE
 
     :param bool cache: Cache responses
     :param list cache_patterns: List of URL patterns for cache
@@ -65,31 +64,26 @@ class RoboBrowser(object):
     :param int max_count: Max count for cache
 
     :param int tries: Number of retries
-    :param Exception errors: Exception(s) to catch
+    :param Exception errors: Exception or tuple of exceptions to catch
     :param int delay: Delay between retries
     :param int multiplier: Delay multiplier between retries
 
     """
-    def __init__(self, auth=None, parser=None, headers=None, user_agent=None,
-                 history=True, timeout=None, verify=True, cache=False,
+    def __init__(self, session=None, parser=None, user_agent=None,
+                 history=True, timeout=None, allow_redirects=True, cache=False,
                  cache_patterns=None, max_age=None, max_count=None, tries=None,
                  errors=RequestException, delay=None, multiplier=None):
 
-        self.session = requests.Session()
+        self.session = session or requests.Session()
 
-        # Add default basic auth
-        if auth:
-            self.session.auth = auth
-
-        # Add default headers
-        headers = headers or {}
+        # Add default user agent string
         if user_agent is not None:
-            headers['User-Agent'] = user_agent
-        self.session.headers.update(headers)
+            self.session.headers['User-Agent'] = user_agent
 
         self.parser = parser
+
         self.timeout = timeout
-        self.verify = verify
+        self.allow_redirects = allow_redirects
 
         # Set up caching
         if cache:
@@ -185,19 +179,34 @@ class RoboBrowser(object):
             url
         )
 
-    def open(self, url, timeout=None, verify=None):
-        """Open a URL.
-
-        :param str url: URL
-        :param int timeout: Timeout in seconds
-        :param bool verify: Verify SSL
+    @property
+    def _default_send_args(self):
+        """
 
         """
-        response = self.session.get(
-            url,
-            timeout=timeout or self.timeout,
-            verify=verify if verify is not None else self.verify,
-        )
+        return {
+            'timeout': self.timeout,
+            'allow_redirects': self.allow_redirects,
+        }
+
+    def _build_send_args(self, **kwargs):
+        """Merge optional arguments with defaults.
+
+        :param kwargs: Keyword arguments to `Session::send`
+
+        """
+        out = self._default_send_args
+        out.update(kwargs)
+        return out
+
+    def open(self, url, **kwargs):
+        """Open a URL.
+
+        :param str url: URL to open
+        :param kwargs: Keyword arguments to `Session::send`
+
+        """
+        response = self.session.get(url, **self._build_send_args(**kwargs))
         self._update_state(response)
 
     def _update_state(self, response):
@@ -291,6 +300,8 @@ class RoboBrowser(object):
 
     def get_forms(self, *args, **kwargs):
         """Find forms by standard BeautifulSoup arguments.
+        :args: Positional arguments to `BeautifulSoup::find_all`
+        :args: Keyword arguments to `BeautifulSoup::find_all`
 
         :return: List of BeautifulSoup tags
 
@@ -301,35 +312,27 @@ class RoboBrowser(object):
             for form in forms
         ]
 
-    def follow_link(self, value=None, *args, **kwargs):
-        """Find a click a link by tag, pattern, and/or BeautifulSoup
-        arguments.
+    def follow_link(self, link, **kwargs):
+        """Click a link.
 
-        :param value: BeautifulSoup tag, string, or regex. If tag, follow its
-            href; if string or regex, search parsed document for match.
+        :param Tag link: Link to click
+        :param kwargs: Keyword arguments to `Session::send`
 
         """
-        if isinstance(value, Tag):
-            link = value
-        elif isinstance(value, string_types):
-            link = self.get_link(text=value, *args, **kwargs)
-        elif isinstance(value, re._pattern_type):
-            link = self.get_link(text=value, *args, **kwargs)
-        else:
-            link = self.get_link(*args, **kwargs)
-        if link is None:
-            raise exceptions.RoboError('No results found')
-        href = link.get('href')
-        if href is None:
-            raise exceptions.RoboError('Link element must have href attribute')
-        self.open(self._build_url(href))
+        try:
+            href = link['href']
+        except KeyError:
+            raise exceptions.RoboError('Link element must have "href" '
+                                       'attribute')
+        self.open(self._build_url(href), **kwargs)
 
-    def submit_form(self, form, submit=None):
+    def submit_form(self, form, submit=None, **kwargs):
         """Submit a form.
 
         :param Form form: Filled-out form object
         :param Submit submit: Optional `Submit` to click, if form includes
             multiple submits
+        :param kwargs: Keyword arguments to `Session::send`
 
         """
         # Get HTTP verb
@@ -338,7 +341,10 @@ class RoboBrowser(object):
         # Send request
         url = self._build_url(form.action) or self.url
         payload = form.serialize(submit=submit)
-        response = self.session.request(method, url, **payload.to_requests(method))
+        serialized = payload.to_requests(method)
+        send_args = self._build_send_args(**kwargs)
+        send_args.update(serialized)
+        response = self.session.request(method, url, **send_args)
 
         # Update history
         self._update_state(response)

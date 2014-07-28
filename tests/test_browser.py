@@ -4,6 +4,7 @@ from nose.tools import *
 
 import re
 import requests
+from bs4 import BeautifulSoup
 
 from robobrowser.browser import RoboBrowser
 from robobrowser import exceptions
@@ -12,17 +13,6 @@ from tests.fixtures import mock_links, mock_urls, mock_forms
 
 
 class TestHeaders(unittest.TestCase):
-
-    @mock_links
-    def test_headers(self):
-        headers = {
-            'X-Song': 'Innuendo',
-            'X-Writer': 'Freddie',
-        }
-        browser = RoboBrowser(headers=headers)
-        browser.open('http://robobrowser.com/links/')
-        for key, value in headers.items():
-            assert_equal(browser.session.headers[key], value)
 
     @mock_links
     def test_user_agent(self):
@@ -56,36 +46,17 @@ class TestLinks(unittest.TestCase):
         assert_equal(len(links), 3)
 
     @mock_links
-    def test_get_link_by_text(self):
-        link = self.browser.get_link('opera')
-        assert_equal(link.get('href'), '/link2/')
-
-    @mock_links
     def test_follow_link_tag(self):
         link = self.browser.get_link(text=re.compile('sheer'))
         self.browser.follow_link(link)
         assert_equal(self.browser.url, 'http://robobrowser.com/link1/')
 
     @mock_links
-    def test_follow_link_text(self):
-        self.browser.follow_link('heart attack')
-        assert_equal(self.browser.url, 'http://robobrowser.com/link1/')
-
-    @mock_links
-    def test_follow_link_regex(self):
-        self.browser.follow_link(re.compile(r'opera'))
-        assert_equal(self.browser.url, 'http://robobrowser.com/link2/')
-
-    @mock_links
-    def test_follow_link_bs_args(self):
-        self.browser.follow_link(class_=re.compile(r'song'))
-        assert_equal(self.browser.url, 'http://robobrowser.com/link2/')
-
-    @mock_links
     def test_follow_link_no_href(self):
+        link = BeautifulSoup('<a>nohref</a>').find('a')
         assert_raises(
             exceptions.RoboError,
-            lambda: self.browser.follow_link(class_=re.compile(r'nohref'))
+            lambda: self.browser.follow_link(link)
         )
 
 
@@ -266,55 +237,87 @@ class TestHistory(unittest.TestCase):
         )
 
 
+class TestCustomSession(unittest.TestCase):
+
+    @mock_links
+    def test_custom_headers(self):
+        session = requests.Session()
+        session.headers.update({
+            'Content-Encoding': 'gzip',
+        })
+        browser = RoboBrowser(session=session)
+        browser.open('http://robobrowser.com/links/')
+        assert_equal(
+            browser.response.request.headers.get('Content-Encoding'),
+            'gzip'
+        )
+
+    @mock_links
+    def test_custom_headers_override(self):
+        session = requests.Session()
+        session.headers.update({
+            'Content-Encoding': 'gzip',
+        })
+        browser = RoboBrowser(session=session)
+        browser.open(
+            'http://robobrowser.com/links/',
+            headers={'Content-Encoding': 'identity'}
+        )
+        assert_equal(
+            browser.response.request.headers.get('Content-Encoding'),
+            'identity'
+        )
+
+
 class TestTimeout(unittest.TestCase):
 
     @mock.patch('requests.Session.get')
     def test_no_timeout(self, mock_get):
         browser = RoboBrowser()
         browser.open('http://robobrowser.com/')
-        mock_get.assert_called_once_with(
-            'http://robobrowser.com/', timeout=None, verify=True
-        )
+        assert_true(mock_get.called)
+        kwargs = mock_get.mock_calls[0][2]
+        assert_true(kwargs.get('timeout') is None)
 
     @mock.patch('requests.Session.get')
     def test_instance_timeout(self, mock_get):
         browser = RoboBrowser(timeout=5)
         browser.open('http://robobrowser.com/')
-        mock_get.assert_called_once_with(
-            'http://robobrowser.com/', timeout=5, verify=True
-        )
+        assert_true(mock_get.called)
+        kwargs = mock_get.mock_calls[0][2]
+        assert_equal(kwargs.get('timeout'), 5)
 
     @mock.patch('requests.Session.get')
     def test_call_timeout(self, mock_get):
         browser = RoboBrowser(timeout=5)
         browser.open('http://robobrowser.com/', timeout=10)
-        mock_get.assert_called_once_with(
-            'http://robobrowser.com/', timeout=10, verify=True
-        )
+        assert_true(mock_get.called)
+        kwargs = mock_get.mock_calls[0][2]
+        assert_equal(kwargs.get('timeout'), 10)
 
 
-class TestVerify(unittest.TestCase):
+class TestAllowRedirects(unittest.TestCase):
 
     @mock.patch('requests.Session.get')
-    def test_no_verify(self, mock_get):
+    def test_no_allow_redirects(self, mock_get):
         browser = RoboBrowser()
         browser.open('http://robobrowser.com/')
-        mock_get.assert_called_once_with(
-            'http://robobrowser.com/', verify=True, timeout=None
-        )
+        assert_true(mock_get.called)
+        kwargs = mock_get.mock_calls[0][2]
+        assert_true(kwargs.get('allow_redirects') is True)
 
     @mock.patch('requests.Session.get')
-    def test_instance_verify(self, mock_get):
-        browser = RoboBrowser(verify=True)
+    def test_instance_allow_redirects(self, mock_get):
+        browser = RoboBrowser(allow_redirects=False)
         browser.open('http://robobrowser.com/')
-        mock_get.assert_called_once_with(
-            'http://robobrowser.com/', verify=True, timeout=None
-        )
+        assert_true(mock_get.called)
+        kwargs = mock_get.mock_calls[0][2]
+        assert_true(kwargs.get('allow_redirects') is False)
 
     @mock.patch('requests.Session.get')
-    def test_call_verify(self, mock_get):
-        browser = RoboBrowser(verify=True)
-        browser.open('http://robobrowser.com/', verify=False)
-        mock_get.assert_called_once_with(
-            'http://robobrowser.com/', verify=False, timeout=None
-        )
+    def test_call_allow_redirects(self, mock_get):
+        browser = RoboBrowser(allow_redirects=True)
+        browser.open('http://robobrowser.com/', allow_redirects=False)
+        assert_true(mock_get.called)
+        kwargs = mock_get.mock_calls[0][2]
+        assert_true(kwargs.get('allow_redirects') is False)
