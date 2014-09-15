@@ -6,7 +6,7 @@ import re
 import collections
 from werkzeug.datastructures import OrderedMultiDict
 
-from robobrowser.compat import iteritems
+from robobrowser.compat import iteritems, encode_if_py2
 
 from . import fields
 from .. import helpers
@@ -193,16 +193,17 @@ class Form(object):
             lambda field: isinstance(field, fields.Submit)
         )
 
+    @encode_if_py2
     def __repr__(self):
-        state = ', '.join(
+        state = u', '.join(
             [
-                '{0}={1}'.format(name, field.value)
+                u'{0}={1}'.format(name, field.value)
                 for name, field in self.fields.items(multi=True)
             ]
         )
         if state:
-            return '<RoboForm {0}>'.format(state)
-        return '<RoboForm>'
+            return u'<RoboForm {0}>'.format(state)
+        return u'<RoboForm>'
 
     def keys(self):
         return self.fields.keys()

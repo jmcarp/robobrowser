@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import mock
 import unittest
 from nose.tools import *
@@ -87,6 +89,13 @@ class TestForm(unittest.TestCase):
         assert_equal(
             repr(Form('<form></form>')),
             '<RoboForm>'
+        )
+
+    def test_repr_unicode(self):
+        form = Form(u'<form><input name="drüms" value="bäss" /></form>')
+        assert_equal(
+            repr(form),
+            '<RoboForm drüms=bäss>'
         )
 
     def test_serialize(self):
