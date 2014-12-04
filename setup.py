@@ -45,7 +45,7 @@ setup(
     author='Joshua Carp',
     author_email='jm.carp@gmail.com',
     url='https://github.com/jmcarp/robobrowser',
-    packages=find_packages(),
+    packages=find_packages(exclude=('tests',)),
     package_dir={'robobrowser': 'robobrowser'},
     include_package_data=True,
     install_requires=requirements,
