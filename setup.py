@@ -4,6 +4,7 @@
 import os
 import re
 import sys
+import pip
 
 from setuptools import setup, find_packages
 from pip.req import parse_requirements
@@ -35,7 +36,7 @@ readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 requirements = [
     str(requirement.req)
-    for requirement in parse_requirements('requirements.txt')
+    for requirement in parse_requirements('requirements.txt', session=pip.download.PipSession())
 ]
 
 setup(
