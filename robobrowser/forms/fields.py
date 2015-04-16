@@ -41,7 +41,7 @@ class BaseField(object):
 
     """
     def __init__(self, parsed):
-        self._parsed = helpers.ensure_soup(parsed)
+        self._parsed = helpers.ensure_soup(parsed, use_builtin_parser=True)
         self._value = None
         self.name = self._get_name(self._parsed)
 

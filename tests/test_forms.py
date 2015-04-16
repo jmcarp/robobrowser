@@ -625,7 +625,7 @@ class TestDefaultValues(unittest.TestCase):
             <select name="select">
                 <option>opt</option>
             </select>
-        ''')
+        ''', 'html.parser')
         select = fields.Select(parsed)
         assert_equal(select.options, ['sel'])
 
@@ -634,6 +634,6 @@ class TestDefaultValues(unittest.TestCase):
             <select name="select" multiple>
                 <option>opt</option>
             </select>
-        ''')
+        ''', 'html.parser')
         select = fields.Select(parsed)
         assert_equal(select.options, ['sel'])
