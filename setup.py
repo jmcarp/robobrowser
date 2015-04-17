@@ -1,21 +1,38 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import os
 import re
 import sys
 
-from setuptools import setup, find_packages
-from pip.req import parse_requirements
+from setuptools import setup
+from setuptools import find_packages
+
+
+REQUIREMENTS = [
+    'beautifulsoup4>=4.3.2',
+    'requests>=2.6.0',
+    'six>=1.9.0',
+    'Werkzeug>=0.10.4',
+]
+TEST_REQUIREMENTS = [
+    'coverage',
+    'coveralls',
+    'docutils',
+    'mock',
+    'nose',
+    'sphinx',
+    'tox',
+]
+
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
     sys.exit()
 
+
 def find_version(fname):
     """Attempts to find the version number in the file names fname.
     Raises RuntimeError if not found.
-
     """
     version = ''
     with open(fname, 'r') as fp:
@@ -29,18 +46,10 @@ def find_version(fname):
         raise RuntimeError('Cannot find version information')
     return version
 
-__version__ = find_version('robobrowser/__init__.py')
-
-readme = open('README.rst').read()
-history = open('HISTORY.rst').read().replace('.. :changelog:', '')
-requirements = [
-    str(requirement.req)
-    for requirement in parse_requirements('requirements.txt')
-]
 
 setup(
     name='robobrowser',
-    version=__version__,
+    version=find_version('robobrowser/__init__.py'),
     description='Your friendly neighborhood web scraper',
     author='Joshua Carp',
     author_email='jm.carp@gmail.com',
@@ -48,10 +57,8 @@ setup(
     packages=find_packages(),
     package_dir={'robobrowser': 'robobrowser'},
     include_package_data=True,
-    install_requires=requirements,
-    tests_require=[
-        'nose',
-    ],
+    install_requires=REQUIREMENTS,
+    tests_require=TEST_REQUIREMENTS,
     license='MIT',
     zip_safe=False,
     keywords='robobrowser',

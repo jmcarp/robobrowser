@@ -10,8 +10,9 @@ python:
     - "pypy"
 
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
-install: 
-    - pip install -r requirements.txt
+install:
+    - python setup.py install
+    - pip install -U -r dev-requirements.txt
     - pip install coverage coveralls nose responses
 
 # command to run tests, e.g. python setup.py test

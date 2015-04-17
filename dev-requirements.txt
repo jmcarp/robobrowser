@@ -1,5 +1,3 @@
--r requirements.txt
-
 coverage
 coveralls
 docutils
