@@ -30,9 +30,12 @@ class RoboCache(object):
 
         """
         if self.max_age:
-            for key, value in iteritems(self.data):
-                if now - value['date'] > self.max_age:
-                    del self.data[key]
+            keys = [
+                key for key, value in iteritems(self.data)
+                if now - value['date'] > self.max_age
+            ]
+            for key in keys:
+                del self.data[key]
 
     def _reduce_count(self):
         """Reduce size of cache by count.
