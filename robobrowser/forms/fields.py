@@ -41,7 +41,7 @@ class BaseField(object):
 
     """
     def __init__(self, parsed):
-        self._parsed = helpers.ensure_soup(parsed)
+        self._parsed = helpers.ensure_soup(parsed, parser='html.parser')
         self._value = None
         self.name = self._get_name(self._parsed)
 
@@ -240,7 +240,7 @@ class Select(NestedOptionField, MultiOptionField):
 
         """
         super(Select, self)._set_initial(initial)
-        if not self._value:
+        if not self._value and self.options:
             self.value = self.options[0]
 
 

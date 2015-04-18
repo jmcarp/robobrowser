@@ -57,10 +57,11 @@ def find(soup, name=None, attrs=None, recursive=True, text=None, **kwargs):
         return tags[0]
 
 
-def ensure_soup(value):
+def ensure_soup(value, parser=None):
     """Coerce a value (or list of values) to Tag (or list of Tag).
 
     :param value: String, BeautifulSoup, Tag, or list of the above
+    :param str parser: Parser to use; defaults to BeautifulSoup default
     :return: Tag or list of Tags
 
     """
@@ -70,10 +71,10 @@ def ensure_soup(value):
         return value
     if isinstance(value, list):
         return [
-            ensure_soup(item)
+            ensure_soup(item, parser=parser)
             for item in value
         ]
-    parsed = BeautifulSoup(value)
+    parsed = BeautifulSoup(value, features=parser)
     return parsed.find()
 
 

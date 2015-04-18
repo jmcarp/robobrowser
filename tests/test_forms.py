@@ -218,6 +218,16 @@ class TestParser(unittest.TestCase):
         assert_equal(len(_fields), 1)
         assert_true(isinstance(_fields[0], fields.Select))
 
+    def test_parse_empty_select(self):
+        html = '''
+            <select name="instrument"></select>
+        '''
+        _fields = _parse_fields(BeautifulSoup(html))
+        assert_equal(len(_fields), 1)
+        assert_true(isinstance(_fields[0], fields.Select))
+        assert_equal(_fields[0].value, '')
+        assert_equal(_fields[0].options, [])
+
     def test_parse_select_multi(self):
         html = '''
             <select name="instrument" multiple>
@@ -615,7 +625,7 @@ class TestDefaultValues(unittest.TestCase):
             <select name="select">
                 <option>opt</option>
             </select>
-        ''')
+        ''', 'html.parser')
         select = fields.Select(parsed)
         assert_equal(select.options, ['sel'])
 
@@ -624,6 +634,6 @@ class TestDefaultValues(unittest.TestCase):
             <select name="select" multiple>
                 <option>opt</option>
             </select>
-        ''')
+        ''', 'html.parser')
         select = fields.Select(parsed)
         assert_equal(select.options, ['sel'])
