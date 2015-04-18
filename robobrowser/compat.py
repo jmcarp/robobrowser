@@ -9,6 +9,7 @@ else:
     from collections import OrderedDict
 OrderedDict = OrderedDict
 
+
 if PY2:
     import urlparse
     urlparse = urlparse
@@ -30,6 +31,7 @@ else:
     iteritems = lambda d: iter(d.items())
     builtin_name = 'builtins'
 
+
 def encode_if_py2(func):
     """If Python 2.x, return decorated function encoding unicode return value
     to UTF-8; else noop.
@@ -42,4 +44,3 @@ def encode_if_py2(func):
             raise TypeError('Wrapped function must return `unicode`')
         return ret.encode('utf-8', 'ignore')
     return wrapped
-
