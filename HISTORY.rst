@@ -3,6 +3,15 @@
 History
 -------
 
+0.5.2
+++++++++++++++++++
+* Remove requirements parsing from `setup.py`.
+* Don't pin to exact requirements versions. Thanks StuntsPT!
+* Don't install tests along with package. Thanks voyageur!
+* Handle empty select fields. Thanks pratyushmittal!
+* Parse partial document correctly when lxml is installed. Thanks again pratyushmittal!
+* Lint code with flake8.
+
 0.5.0
 ++++++++++++++++++
 * Add optional `session` argument to `RoboBrowser::__init__`
