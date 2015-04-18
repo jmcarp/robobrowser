@@ -5,7 +5,7 @@ Robotic browser.
 import re
 import requests
 from bs4 import BeautifulSoup
-from bs4.element import Tag
+from werkzeug import cached_property
 from requests.exceptions import RequestException
 
 from robobrowser import helpers
@@ -30,20 +30,16 @@ class RoboState(object):
         self.browser = browser
         self.response = response
         self.url = response.url
-        self._parsed = None
 
-    @property
+    @cached_property
     def parsed(self):
         """Lazily parse response content, using HTML parser specified by the
         browser.
-
         """
-        if self._parsed is None:
-            self._parsed = BeautifulSoup(
-                self.response.content,
-                features=self.browser.parser,
-            )
-        return self._parsed
+        return BeautifulSoup(
+            self.response.content,
+            features=self.browser.parser,
+        )
 
 
 class RoboBrowser(object):
