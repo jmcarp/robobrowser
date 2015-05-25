@@ -113,7 +113,7 @@ class TestForm(unittest.TestCase):
         '''
         form = Form(html)
         serialized = form.serialize()
-        assert_not_in('guitar', serialized.data)
+        assert_false('guitar' in serialized.data)
 
 
 class TestFormMultiSubmit(unittest.TestCase):
