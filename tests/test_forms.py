@@ -2,7 +2,7 @@
 
 import mock
 import unittest
-from nose.tools import *
+from nose.tools import *  # noqa
 
 import tempfile
 from bs4 import BeautifulSoup
@@ -82,7 +82,7 @@ class TestForm(unittest.TestCase):
         assert_equal(
             repr(self.form),
             '<RoboForm vocals=, guitar=, drums=roger, bass=, '
-                'multi=multi1, multi=multi2, submit=submit>'
+            'multi=multi1, multi=multi2, submit=submit>'
         )
 
     def test_repr_empty(self):
@@ -102,6 +102,18 @@ class TestForm(unittest.TestCase):
         serialized = self.form.serialize()
         assert_equal(serialized.data.getlist('multi'), ['multi1', 'multi2'])
         assert_equal(serialized.data['submit'], 'submit')
+
+    def test_serialize_skips_disabled(self):
+        html = '''
+            <form>
+                <input name="vocals" />
+                <input name="guitar" disabled />
+                <input type="submit" name="submit" value="submit" />
+            </form>
+        '''
+        form = Form(html)
+        serialized = form.serialize()
+        assert_not_in('guitar', serialized.data)
 
 
 class TestFormMultiSubmit(unittest.TestCase):
@@ -532,7 +544,7 @@ class TestCheckbox(unittest.TestCase):
         assert_equal(self.input._value, [2])
         assert_equal(self.input.value, ['taylor'])
 
-    def test_value(self):
+    def test_values(self):
         self.input.value = ['taylor', 'deacon']
         assert_equal(self.input._value, [2, 3])
         assert_equal(self.input.value, ['taylor', 'deacon'])
@@ -602,6 +614,72 @@ class TestFileInput(unittest.TestCase):
             self.input.serialize(),
             {'song': file}
         )
+
+
+class TestDisabledValues(unittest.TestCase):
+
+    def test_input_enabled(self):
+        html = '<input name="brian" value="may" />'
+        input = fields.Input(BeautifulSoup(html).find('input'))
+        assert_false(input.disabled)
+
+    def test_input_disabled(self):
+        html = '<input name="brian" value="may" disabled />'
+        input = fields.Input(BeautifulSoup(html).find('input'))
+        assert_true(input.disabled)
+
+    def test_checkbox_enabled(self):
+        html = '''
+            <input type="checkbox" name="member" value="mercury" checked />vocals<br />
+            <input type="checkbox" name="member" value="may" />guitar<br />
+            <input type="checkbox" name="member" value="taylor" disabled />drums<br />
+            <input type="checkbox" name="member" value="deacon" checked />bass<br />
+        '''
+        input = fields.Checkbox(BeautifulSoup(html).find_all('input'))
+        assert_false(input.disabled)
+
+    def test_checkbox_disabled(self):
+        html = '''
+            <input type="checkbox" name="member" value="mercury" checked disabled />vocals<br />
+            <input type="checkbox" name="member" value="may" disabled />guitar<br />
+            <input type="checkbox" name="member" value="taylor" disabled />drums<br />
+            <input type="checkbox" name="member" value="deacon" checked disabled />bass<br />
+        '''
+        input = fields.Checkbox(BeautifulSoup(html).find_all('input'))
+        assert_true(input.disabled)
+
+    def test_select_enabled(self):
+        html = '''
+            <select name="john">
+                <option value="tie">your mother down</option>
+                <option value="you're" selected>my best friend</option>
+                <option value="the">millionaire waltz</option>
+            </select>
+        '''
+        input = fields.Select(BeautifulSoup(html).find('select'))
+        assert_false(input.disabled)
+
+    def test_select_disabled_root(self):
+        html = '''
+            <select name="john" disabled>
+                <option value="tie">your mother down</option>
+                <option value="you're" selected>my best friend</option>
+                <option value="the">millionaire waltz</option>
+            </select>
+        '''
+        input = fields.Select(BeautifulSoup(html).find('select'))
+        assert_true(input.disabled)
+
+    def test_select_disabled_options(self):
+        html = '''
+            <select name="john">
+                <option value="tie" disabled>your mother down</option>
+                <option value="you're" selected disabled>my best friend</option>
+                <option value="the" disabled>millionaire waltz</option>
+            </select>
+        '''
+        input = fields.Select(BeautifulSoup(html).find('select'))
+        assert_true(input.disabled)
 
 
 class TestDefaultValues(unittest.TestCase):

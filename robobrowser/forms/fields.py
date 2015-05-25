@@ -45,6 +45,10 @@ class BaseField(object):
         self._value = None
         self.name = self._get_name(self._parsed)
 
+    @property
+    def disabled(self):
+        return 'disabled' in self._parsed.attrs
+
     def _get_name(self, parsed):
         name = parsed.get('name')
         if name is not None:
@@ -172,6 +176,10 @@ class MultiValueField(MultiOptionField):
 
 class FlatOptionField(MultiOptionField):
 
+    @property
+    def disabled(self):
+        return all('disabled' in each.attrs for each in self._parsed)
+
     def _get_name(self, parsed):
         name = parsed[0].get('name')
         if name is not None:
@@ -195,6 +203,13 @@ class FlatOptionField(MultiOptionField):
 
 
 class NestedOptionField(MultiOptionField):
+
+    @property
+    def disabled(self):
+        return (
+            super(NestedOptionField, self).disabled or
+            all('disabled' in each.attrs for each in self._parsed.find_all('option'))
+        )
 
     def _get_options(self, parsed):
         options, labels, initial = [], [], []

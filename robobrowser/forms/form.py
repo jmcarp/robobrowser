@@ -115,7 +115,8 @@ class Payload(object):
         """
         payload = cls()
         for _, field in fields.items(multi=True):
-            payload.add(field.serialize(), field.payload_key)
+            if not field.disabled:
+                payload.add(field.serialize(), field.payload_key)
         return payload
 
     def add(self, data, key=None):
