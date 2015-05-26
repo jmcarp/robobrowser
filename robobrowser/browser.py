@@ -191,18 +191,20 @@ class RoboBrowser(object):
         :param kwargs: Keyword arguments to `Session::send`
 
         """
-        out = self._default_send_args
+        out = {}
+        out.update(self._default_send_args)
         out.update(kwargs)
         return out
 
-    def open(self, url, **kwargs):
+    def open(self, url, method='get', **kwargs):
         """Open a URL.
 
         :param str url: URL to open
-        :param kwargs: Keyword arguments to `Session::send`
+        :param str method: Optional method; defaults to `'get'`
+        :param kwargs: Keyword arguments to `Session::request`
 
         """
-        response = self.session.get(url, **self._build_send_args(**kwargs))
+        response = self.session.request(method, url, **self._build_send_args(**kwargs))
         self._update_state(response)
 
     def _update_state(self, response):
