@@ -126,11 +126,8 @@ class MultiOptionField(BaseField):
         if value in self.options:
             return self.options.index(value)
         if value in self.labels:
-            index = self.labels.index(value)
-            if index not in self.labels[index:]:
-                return index
-        raise ValueError('Option "{o}" does not exist in multi-option form '
-                         'field "{f}".'.format(o=value, f=self.name))
+            return self.labels.index(value)
+        raise ValueError('Option {0} not found in field {1!r}'.format(value, self))
 
     # Property methods
     def _get_value(self):
@@ -166,7 +163,7 @@ class MultiValueField(MultiOptionField):
     def append(self, value):
         index = self._value_to_index(value)
         if index in self._value:
-            raise ValueError
+            raise ValueError('Option {0} already in field {1!r}'.format(value, self))
         self._value.append(index)
         self._value.sort()
 
@@ -182,10 +179,7 @@ class FlatOptionField(MultiOptionField):
         return all('disabled' in each.attrs for each in self._parsed)
 
     def _get_name(self, parsed):
-        name = parsed[0].get('name')
-        if name is not None:
-            return name
-        raise exceptions.InvalidNameError
+        return super(FlatOptionField, self)._get_name(parsed[0])
 
     def _get_options(self, parsed):
         options, labels, initial = [], [], []
