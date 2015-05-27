@@ -129,7 +129,8 @@ class MultiOptionField(BaseField):
             index = self.labels.index(value)
             if index not in self.labels[index:]:
                 return index
-        raise ValueError
+        raise ValueError('Option "{o}" does not exist in multi-option form '
+                         'field "{f}".'.format(o=value, f=self.name))
 
     # Property methods
     def _get_value(self):
