@@ -10,29 +10,7 @@ from robobrowser import helpers
 from robobrowser import exceptions
 
 
-class ValueMeta(type):
-    """Metaclass that creates a value property on class creation. Classes
-    with this metaclass should define _get_value and optionally _set_value
-    methods.
-    """
-    def __init__(cls, name, bases, dct):
-        cls.value = property(
-            getattr(cls, '_get_value'),
-            getattr(cls, '_set_value', None),
-        )
-        super(ValueMeta, cls).__init__(name, bases, dct)
-
-
-class FieldMeta(ValueMeta, abc.ABCMeta):
-    """Multiply inherit from ValueMeta and ABCMeta; classes with this metaclass
-    are automatically assigned a value property and can use methods from
-    ABCMeta (e.g. abstractmethod).
-    """
-    pass
-
-
-@six.add_metaclass(FieldMeta)
-class BaseField(object):
+class BaseField(six.with_metaclass(abc.ABCMeta, object)):
     """Abstract base class for form fields.
 
     :param parsed: String or BeautifulSoup tag
@@ -59,11 +37,12 @@ class BaseField(object):
     def serialize(self):
         return {self.name: self.value}
 
-    # Property methods
-    def _get_value(self):
+    @property
+    def value(self):
         return self._value if self._value else ''
 
-    def _set_value(self, value):
+    @value.setter
+    def value(self, value):
         self._value = value
 
 
@@ -80,7 +59,8 @@ class Submit(Input):
 
 class FileInput(BaseField):
 
-    def _set_value(self, value):
+    @BaseField.value.setter
+    def value(self, value):
         if hasattr(value, 'read'):
             self._value = value
         elif isinstance(value, string_types):
@@ -118,13 +98,14 @@ class MultiOptionField(BaseField):
             return self.labels.index(value)
         raise ValueError('Option {0} not found in field {1!r}'.format(value, self))
 
-    # Property methods
-    def _get_value(self):
+    @property
+    def value(self):
         if self._value is None:
             return ''
         return self.options[self._value]
 
-    def _set_value(self, value):
+    @value.setter
+    def value(self, value):
         self._value = self._value_to_index(value)
 
 
@@ -133,14 +114,15 @@ class MultiValueField(MultiOptionField):
     def _set_initial(self, initial):
         self.value = initial
 
-    # Property methods
-    def _get_value(self):
+    @property
+    def value(self):
         return [
             self.options[idx]
             for idx in self._value
         ]
 
-    def _set_value(self, value):
+    @value.setter
+    def value(self, value):
         if not isinstance(value, list):
             value = [value]
         self._value = [
@@ -226,7 +208,6 @@ class Select(NestedOptionField, MultiOptionField):
 
     def _set_initial(self, initial):
         """If no option is selected initially, select the first option.
-
         """
         super(Select, self)._set_initial(initial)
         if not self._value and self.options:
