@@ -14,7 +14,6 @@ class ValueMeta(type):
     """Metaclass that creates a value property on class creation. Classes
     with this metaclass should define _get_value and optionally _set_value
     methods.
-
     """
     def __init__(cls, name, bases, dct):
         cls.value = property(
@@ -28,7 +27,6 @@ class FieldMeta(ValueMeta, abc.ABCMeta):
     """Multiply inherit from ValueMeta and ABCMeta; classes with this metaclass
     are automatically assigned a value property and can use methods from
     ABCMeta (e.g. abstractmethod).
-
     """
     pass
 
@@ -38,7 +36,6 @@ class BaseField(object):
     """Abstract base class for form fields.
 
     :param parsed: String or BeautifulSoup tag
-
     """
     def __init__(self, parsed):
         self._parsed = helpers.ensure_soup(parsed, parser='html.parser')
@@ -97,14 +94,6 @@ class FileInput(BaseField):
 
 
 class MultiOptionField(BaseField):
-
-    @abc.abstractproperty
-    def default_value(self):
-        """When the "value" attribute is not defined for a multi-option form
-        field, some default must be used instead.
-
-        """
-        return None
 
     def __init__(self, parsed):
         super(MultiOptionField, self).__init__(parsed)
@@ -184,7 +173,7 @@ class FlatOptionField(MultiOptionField):
     def _get_options(self, parsed):
         options, labels, initial = [], [], []
         for option in parsed:
-            value = option.get('value', self.default_value)
+            value = option.get('value', 'on')
             checked = option.get('checked')
             options.append(value)
             labels.append(
@@ -209,7 +198,7 @@ class NestedOptionField(MultiOptionField):
     def _get_options(self, parsed):
         options, labels, initial = [], [], []
         for option in parsed.find_all('option'):
-            value = option.get('value', self.default_value)
+            value = option.get('value', option.text)
             selected = option.get('selected')
             options.append(value)
             labels.append(option.text)
@@ -226,24 +215,14 @@ class Textarea(Input):
 
 
 class Checkbox(FlatOptionField, MultiValueField):
-
-    @property
-    def default_value(self):
-        return 'on'
+    pass
 
 
 class Radio(FlatOptionField, MultiOptionField):
-
-    @property
-    def default_value(self):
-        return 'on'
+    pass
 
 
 class Select(NestedOptionField, MultiOptionField):
-
-    @property
-    def default_value(self):
-        return 'sel'
 
     def _set_initial(self, initial):
         """If no option is selected initially, select the first option.
@@ -255,7 +234,4 @@ class Select(NestedOptionField, MultiOptionField):
 
 
 class MultiSelect(NestedOptionField, MultiValueField):
-
-    @property
-    def default_value(self):
-        return 'sel'
+    pass

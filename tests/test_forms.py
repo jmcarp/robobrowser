@@ -705,7 +705,7 @@ class TestDefaultValues(unittest.TestCase):
             </select>
         ''', 'html.parser')
         select = fields.Select(parsed)
-        assert_equal(select.options, ['sel'])
+        assert_equal(select.options, ['opt'])
 
     def test_multi_select_default(self):
         parsed = BeautifulSoup('''
@@ -714,4 +714,4 @@ class TestDefaultValues(unittest.TestCase):
             </select>
         ''', 'html.parser')
         select = fields.Select(parsed)
-        assert_equal(select.options, ['sel'])
+        assert_equal(select.options, ['opt'])
