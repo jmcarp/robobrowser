@@ -6,14 +6,13 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from werkzeug import cached_property
-from requests.exceptions import RequestException
+from requests.packages.urllib3.util.retry import Retry
 
 from robobrowser import helpers
 from robobrowser import exceptions
 from robobrowser.compat import urlparse
 from robobrowser.forms.form import Form
 from robobrowser.cache import RoboHTTPAdapter
-from robobrowser.helpers import retry
 
 
 _link_ptn = re.compile(r'^(a|button)$', re.I)
@@ -68,7 +67,7 @@ class RoboBrowser(object):
     def __init__(self, session=None, parser=None, user_agent=None,
                  history=True, timeout=None, allow_redirects=True, cache=False,
                  cache_patterns=None, max_age=None, max_count=None, tries=None,
-                 errors=RequestException, delay=None, multiplier=None):
+                 multiplier=None):
 
         self.session = session or requests.Session()
 
@@ -107,10 +106,9 @@ class RoboBrowser(object):
 
         # Set up retries
         if tries:
-            decorator = retry(tries, errors, delay, multiplier)
-            self._open, self.open = self.open, decorator(self.open)
-            self._submit_form, self.submit_form = \
-                self.submit_form, decorator(self.submit_form)
+            retry = Retry(tries, backoff_factor=multiplier)
+            for protocol in ['http://', 'https://']:
+                self.session.adapters[protocol].max_retries = retry
 
     def __repr__(self):
         try:
