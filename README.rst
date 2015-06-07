@@ -3,7 +3,7 @@ RoboBrowser: Your friendly neighborhood web scraper
 
 .. image:: https://badge.fury.io/py/robobrowser.png
     :target: http://badge.fury.io/py/robobrowser
-    
+
 .. image:: https://travis-ci.org/jmcarp/robobrowser.png?branch=master
         :target: https://travis-ci.org/jmcarp/robobrowser
 
@@ -17,14 +17,14 @@ can fetch a page, click on links and buttons, and fill out and submit forms. If 
 that don't have APIs, RoboBrowser can help.
 
 .. code-block:: python
-    
+
     import re
     from robobrowser import RoboBrowser
-    
+
     # Browse to Genius
     browser = RoboBrowser(history=True)
     browser.open('http://genius.com/')
-    
+
     # Search for Porcupine Tree
     form = browser.get_form(action='/search')
     form                # <RoboForm q=>
@@ -36,7 +36,7 @@ that don't have APIs, RoboBrowser can help.
     browser.follow_link(songs[0])
     lyrics = browser.select('.lyrics')
     lyrics[0].text      # \nHear the sound of music ...
-    
+
     # Back to results page
     browser.back()
 
@@ -48,10 +48,10 @@ that don't have APIs, RoboBrowser can help.
     lyrics = browser.find(class_=re.compile(r'\blyrics\b'))
     lyrics.text         # \nTrain set and match spied under the blind...
 
-RoboBrowser combines the best of two excellent Python libraries: 
-`Requests <http://docs.python-requests.org/en/latest/>`_ and 
-`BeautifulSoup <http://www.crummy.com/software/BeautifulSoup/>`_. 
-RoboBrowser represents browser sessions using Requests and HTML responses 
+RoboBrowser combines the best of two excellent Python libraries:
+`Requests <http://docs.python-requests.org/en/latest/>`_ and
+`BeautifulSoup <http://www.crummy.com/software/BeautifulSoup/>`_.
+RoboBrowser represents browser sessions using Requests and HTML responses
 using BeautifulSoup, transparently exposing methods of both libraries:
 
 .. code-block:: python
@@ -76,11 +76,23 @@ using BeautifulSoup, transparently exposing methods of both libraries:
                                                         # <span class="mega-octicon octicon-checklist"></span>
                                                         # ...
 
+You can also pass a custom `Session` instance for lower-level configuration:
+
+.. code-block:: python
+
+    from requests import Session
+    from robobrowser import RoboBrowser
+
+    session = Session()
+    session.verify = False  # Skip SSL verification
+    session.proxies = {'http': 'http://custom.proxy.com/'}  # Set default proxies
+    browser = RoboBrowser(session=session)
+
 RoboBrowser also includes tools for working with forms, inspired by
 `WebTest <https://github.com/Pylons/webtest>`_ and `Mechanize <http://wwwsearch.sourceforge.net/mechanize/>`_.
 
 .. code-block:: python
-    
+
     from robobrowser import RoboBrowser
 
     browser = RoboBrowser()
@@ -103,9 +115,9 @@ RoboBrowser also includes tools for working with forms, inspired by
 Checkboxes:
 
 .. code-block:: python
-    
+
     from robobrowser import RoboBrowser
-    
+
     # Browse to a page with checkbox inputs
     browser = RoboBrowser()
     browser.open('http://www.w3schools.com/html/html_forms.asp')
@@ -114,26 +126,26 @@ Checkboxes:
     form = browser.get_forms()[3]
     form                            # <RoboForm vehicle=[]>
     form['vehicle']                 # <robobrowser.forms.fields.Checkbox...>
-    
+
     # Checked values can be get and set like lists
     form['vehicle'].options         # [u'Bike', u'Car']
     form['vehicle'].value           # []
     form['vehicle'].value = ['Bike']
     form['vehicle'].value = ['Bike', 'Car']
-    
+
     # Values can also be set using input labels
     form['vehicle'].labels          # [u'I have a bike', u'I have a car \r\n']
     form['vehicle'].value = ['I have a bike']
     form['vehicle'].value           # [u'Bike']
 
-    # Only values that correspond to checkbox values or labels can be set; 
+    # Only values that correspond to checkbox values or labels can be set;
     # this will raise a `ValueError`
     form['vehicle'].value = ['Hot Dogs']
 
 Uploading files:
 
 .. code-block:: python
-    
+
     from robobrowser import RoboBrowser
 
     # Browse to a page with an upload form
@@ -150,6 +162,8 @@ Uploading files:
 
     # Submit
     browser.submit(upload_form)
+
+By default, creating a browser instantiates a new requests `Session`. 
 
 Requirements
 ------------
