@@ -3,6 +3,14 @@
 History
 -------
 
+0.5.3
+++++++++++++++++++
+* Improve documentation. Thanks tpugsley and rcutmore for improvements!
+* Improve messages in error handling. Thanks again rcutmore!
+* Fix default values for <select> fields. Thanks pohmelie for reporting!
+* Simplify value property of field elements; delete `FieldMeta`.
+* Move retry logic to requests and urllib3.
+
 0.5.2
 ++++++++++++++++++
 * Remove requirements parsing from `setup.py`.
